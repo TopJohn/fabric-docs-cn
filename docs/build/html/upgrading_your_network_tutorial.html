@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Upgrading Your Network Components &mdash; hyperledger-fabricdocs master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using Private Data in Fabric" href="private_data_tutorial.html" />
+    <link rel="prev" title="Adding an Org to a Channel" href="channel_update_tutorial.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="index.html" class="icon icon-home"> hyperledger-fabricdocs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="Hyperledger Fabric" src=_images/hyperledger_fabric_logo_color.png />
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="_static/images/github_button.png"/></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="StackOverflow" src="_static/images/stackoverflow_button.png"/></a>
+&nbsp;<a href="https://chat.hyperledger.org"><img style="padding: 0px; margin: auto auto auto auto;" alt="Rocket Chat" src="_static/images/rocketchat_button.png"/></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="Youtube Channel" src="_static/images/youtube_button.png"/></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="whatis.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html">What’s new in v1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html#release-notes">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developapps/developing_applications.html">Developing Applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="write_first_app.html">Writing Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/commercial_paper.html">Commercial paper tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_network.html">Building Your First Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_update_tutorial.html">Adding an Org to a Channel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Upgrading Your Network Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#launch-a-v1-3-network">Launch a v1.3 network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#clean-up">Clean up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generate-the-crypto-and-bring-up-the-network">Generate the crypto and bring up the network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-the-newest-samples">Get the newest samples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#want-to-upgrade-now">Want to upgrade now?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrade-the-orderer-containers">Upgrade the orderer containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrade-the-peer-containers">Upgrade the peer containers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#verify-peer-upgrade-completion">Verify peer upgrade completion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrading-components-byfn-does-not-support">Upgrading components BYFN does not support</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fabric-ca-container">Fabric CA container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade-node-sdk-clients">Upgrade Node SDK clients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrading-the-kafka-cluster">Upgrading the Kafka cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrading-couchdb">Upgrading CouchDB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade-node-chaincode-shim">Upgrade Node chaincode shim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade-chaincodes-with-vendored-shim">Upgrade Chaincodes with vendored shim</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="private_data_tutorial.html">Using Private Data in Fabric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode.html">Chaincode Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode4ade.html">Chaincode for Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode4noah.html">Chaincode for Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemchaincode.html">System Chaincode Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="couchdb_tutorial.html">Using CouchDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videos.html">Videos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ops_guide.html">Operations Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Commands Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fabric-FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributions Welcome!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="questions.html">Still Have Questions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Status</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hyperledger-fabricdocs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+        
+      <li>Upgrading Your Network Components</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/upgrading_your_network_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="upgrading-your-network-components">
+<h1>Upgrading Your Network Components<a class="headerlink" href="#upgrading-your-network-components" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When we use the term “upgrade” in this documentation, we’re primarily
+referring to changing the version of a component (for example, going
+from a v1.3 binary to a v1.4 binary). The term “update,” on the other
+hand, refers not to versions but to configuration changes, such as
+updating a channel configuration or a deployment script. As there is
+no data migration, technically speaking, in Fabric, we will not use
+the term “migration” or “migrate” here.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Also, if your network is not yet at Fabric v1.3, follow the instructions for
+<a class="reference external" href="http://hyperledger-fabric.readthedocs.io/en/release-1.3/upgrading_your_network_tutorial.html">Upgrading Your Network to v1.3</a>.
+The instructions in this documentation only cover moving from v1.3 to
+v1.4, not from any other version to v1.4.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Because the <a class="reference internal" href="build_network.html"><span class="doc">Building Your First Network</span></a> (BYFN) tutorial defaults to the “latest” binaries,
+if you have run it since the release of v1.4, your machine will have v1.4 binaries
+and tools installed on it and you will not be able to upgrade them.</p>
+<p>As a result, this tutorial will provide a network based on Hyperledger Fabric
+v1.3 binaries as well as the v1.4 binaries you will be upgrading to.</p>
+<p>At a high level, our upgrade tutorial will perform the following steps:</p>
+<ol class="arabic simple">
+<li>Backup the ledger and MSPs.</li>
+<li>Upgrade the orderer binaries to Fabric v1.4.</li>
+<li>Upgrade the peer binaries to Fabric v1.4.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are no new <a class="reference internal" href="capability_requirements.html"><span class="doc">Capability Requirements</span></a> in v1.4. As a result,
+we do not have to update any channel configurations as part of an
+upgrade to v1.4.</p>
+</div>
+<p>This tutorial will demonstrate how to perform each of these steps individually
+with CLI commands. We will also describe how the CLI <code class="docutils literal notranslate"><span class="pre">tools</span></code> image can be
+updated.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Because BYFN uses a “SOLO” ordering service (one orderer), our script
+brings down the entire network. However, in production environments,
+the orderers and peers can be upgraded simultaneously and on a rolling
+basis. In other words, you can upgrade the binaries in any order without
+bringing down the network.</p>
+<p>Because BYFN is not compatible with the following components, our script for
+upgrading BYFN will not cover them:</p>
+<ul class="simple">
+<li><strong>Fabric CA</strong></li>
+<li><strong>Kafka</strong></li>
+<li><strong>CouchDB</strong></li>
+<li><strong>SDK</strong></li>
+</ul>
+<p class="last">The process for upgrading these components — if necessary — will
+be covered in a section following the tutorial. We will also show how
+to upgrade the Node chaincode shim.</p>
+</div>
+<p>From an operational perspective, it’s worth noting that the process for gathering
+logs has changed in v1.4, from <code class="docutils literal notranslate"><span class="pre">CORE_LOGGING_LEVEL</span></code> (for the peer) and
+<code class="docutils literal notranslate"><span class="pre">ORDERER_GENERAL_LOGLEVEL</span></code> (for the orderer) to <code class="docutils literal notranslate"><span class="pre">FABRIC_LOGGING_SPEC</span></code> (the new
+operations service). For more information, check out the
+<a class="reference external" href="https://github.com/hyperledger/fabric/releases/tag/v1.4.0">Fabric release notes</a>.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>If you haven’t already done so, ensure you have all of the dependencies on your
+machine as described in <a class="reference internal" href="prereqs.html"><span class="doc">Prerequisites</span></a>.</p>
+</div>
+</div>
+<div class="section" id="launch-a-v1-3-network">
+<h2>Launch a v1.3 network<a class="headerlink" href="#launch-a-v1-3-network" title="Permalink to this headline">¶</a></h2>
+<p>Before we can upgrade to v1.4, we must first provision a network running Fabric
+v1.3 images.</p>
+<p>Just as in the BYFN tutorial, we will be operating from the <code class="docutils literal notranslate"><span class="pre">first-network</span></code>
+subdirectory within your local clone of <code class="docutils literal notranslate"><span class="pre">fabric-samples</span></code>. Change into that
+directory now. You will also want to open a few extra terminals for ease of use.</p>
+<div class="section" id="clean-up">
+<h3>Clean up<a class="headerlink" href="#clean-up" title="Permalink to this headline">¶</a></h3>
+<p>We want to operate from a known state, so we will use the <code class="docutils literal notranslate"><span class="pre">byfn.sh</span></code> script to
+kill any active or stale docker containers and remove any previously generated
+artifacts. Run:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">down</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-the-crypto-and-bring-up-the-network">
+<h3>Generate the crypto and bring up the network<a class="headerlink" href="#generate-the-crypto-and-bring-up-the-network" title="Permalink to this headline">¶</a></h3>
+<p>With a clean environment, launch our v1.3 BYFN network using these four commands:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">fetch</span> <span class="n">origin</span>
+
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">v1</span><span class="o">.</span><span class="mf">3.0</span>
+
+<span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">generate</span>
+
+<span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">up</span> <span class="o">-</span><span class="n">t</span> <span class="mi">3000</span> <span class="o">-</span><span class="n">i</span> <span class="mf">1.3</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have locally built v1.3 images, they will be used by the example.
+If you get errors, please consider cleaning up your locally built v1.3 images
+and running the example again. This will download v1.3 images from docker hub.</p>
+</div>
+<p>If BYFN has launched properly, you will see:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=====================</span> <span class="n">All</span> <span class="n">GOOD</span><span class="p">,</span> <span class="n">BYFN</span> <span class="n">execution</span> <span class="n">completed</span> <span class="o">=====================</span>
+</pre></div>
+</div>
+<p>We are now ready to upgrade our network to Hyperledger Fabric v1.4.</p>
+</div>
+<div class="section" id="get-the-newest-samples">
+<h3>Get the newest samples<a class="headerlink" href="#get-the-newest-samples" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The instructions below pertain to whatever is the most recently
+published version of v1.4.x. Please substitute 1.4.x with the version
+identifier of the published release that you are testing. In other
+words, replace ‘1.4.x’ with ‘1.4.0’ if you are testing the first
+release.</p>
+</div>
+<p>Before completing the rest of the tutorial, it’s important to get the v1.4.x
+version of the samples, you can do this by issuing:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">fetch</span> <span class="n">origin</span>
+
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">v1</span><span class="o">.</span><span class="mf">4.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="want-to-upgrade-now">
+<h3>Want to upgrade now?<a class="headerlink" href="#want-to-upgrade-now" title="Permalink to this headline">¶</a></h3>
+<p>We have a script that will upgrade all of the components in BYFN as well as
+enable any capabilities (note, no new capabilities are required for v1.4).
+If you are running a production network, or are an
+administrator of some part of a network, this script can serve as a template
+for performing your own upgrades.</p>
+<p>Afterwards, we will walk you through the steps in the script and describe what
+each piece of code is doing in the upgrade process.</p>
+<p>To run the script, issue these commands:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note, replace &#39;1.4.x&#39; with a specific version, for example &#39;1.4.0&#39;.</span>
+<span class="c1"># Don&#39;t pass the image flag &#39;-i 1.4.x&#39; if you prefer to default to &#39;latest&#39; images.</span>
+
+<span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">upgrade</span> <span class="o">-</span><span class="n">i</span> <span class="mf">1.4</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>If the upgrade is successful, you should see the following:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=====================</span> <span class="n">All</span> <span class="n">GOOD</span><span class="p">,</span> <span class="n">End</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">End</span> <span class="n">UPGRADE</span> <span class="n">Scenario</span> <span class="n">execution</span> <span class="n">completed</span> <span class="o">=====================</span>
+</pre></div>
+</div>
+<p>If you want to upgrade the network manually, simply run <code class="docutils literal notranslate"><span class="pre">./byfn.sh</span> <span class="pre">down</span></code> again
+and perform the steps up to — but not including — <code class="docutils literal notranslate"><span class="pre">./byfn.sh</span> <span class="pre">upgrade</span> <span class="pre">-i</span> <span class="pre">1.4.x</span></code>.
+Then proceed to the next section.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Many of the commands you’ll run in this section will not result in any
+output. In general, assume no output is good output.</p>
+</div>
+</div>
+</div>
+<div class="section" id="upgrade-the-orderer-containers">
+<h2>Upgrade the orderer containers<a class="headerlink" href="#upgrade-the-orderer-containers" title="Permalink to this headline">¶</a></h2>
+<p>Orderer containers should be upgraded in a rolling fashion (one at a time). At a
+high level, the orderer upgrade process goes as follows:</p>
+<ol class="arabic simple">
+<li>Stop the orderer.</li>
+<li>Back up the orderer’s ledger and MSP.</li>
+<li>Restart the orderer with the latest images.</li>
+<li>Verify upgrade completion.</li>
+</ol>
+<p>As a consequence of leveraging BYFN, we have a solo orderer setup, therefore, we
+will only perform this process once. In a Kafka setup, however, this process will
+have to be repeated on each orderer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tutorial uses a docker deployment. For native deployments,
+replace the file <code class="docutils literal notranslate"><span class="pre">orderer</span></code> with the one from the release artifacts.
+Backup the <code class="docutils literal notranslate"><span class="pre">orderer.yaml</span></code> and replace it with the <code class="docutils literal notranslate"><span class="pre">orderer.yaml</span></code>
+file from the release artifacts. Then port any modified variables from
+the backed up <code class="docutils literal notranslate"><span class="pre">orderer.yaml</span></code> to the new one. Utilizing a utility
+like <code class="docutils literal notranslate"><span class="pre">diff</span></code> may be helpful.</p>
+</div>
+<p>Let’s begin the upgrade process by <strong>bringing down the orderer</strong>:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>docker stop orderer.example.com
+
+export LEDGERS_BACKUP=./ledgers-backup
+
+# Note, replace &#39;1.4.x&#39; with a specific version, for example &#39;1.4.0&#39;.
+# Set IMAGE_TAG to &#39;latest&#39; if you prefer to default to the images tagged &#39;latest&#39; on your system.
+
+export IMAGE_TAG=$(go env GOARCH)-1.4.x
+</pre></div>
+</div>
+<p>We have created a variable for a directory to put file backups into, and
+exported the <code class="docutils literal notranslate"><span class="pre">IMAGE_TAG</span></code> we’d like to move to.</p>
+<p>Once the orderer is down, you’ll want to <strong>backup its ledger and MSP</strong>:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>mkdir -p $LEDGERS_BACKUP
+
+docker cp orderer.example.com:/var/hyperledger/production/orderer/ ./$LEDGERS_BACKUP/orderer.example.com
+</pre></div>
+</div>
+<p>In a production network this process would be repeated for each of the Kafka-based
+orderers in a rolling fashion.</p>
+<p>Now <strong>download and restart the orderer</strong> with our new fabric image:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">cli</span><span class="o">.</span><span class="n">yaml</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">deps</span> <span class="n">orderer</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>Because our sample uses a “solo” ordering service, there are no other orderers in the
+network that the restarted orderer must sync up to. However, in a production network
+leveraging Kafka, it will be a best practice to issue <code class="docutils literal notranslate"><span class="pre">peer</span> <span class="pre">channel</span> <span class="pre">fetch</span> <span class="pre">&lt;blocknumber&gt;</span></code>
+after restarting the orderer to verify that it has caught up to the other orderers.</p>
+</div>
+<div class="section" id="upgrade-the-peer-containers">
+<h2>Upgrade the peer containers<a class="headerlink" href="#upgrade-the-peer-containers" title="Permalink to this headline">¶</a></h2>
+<p>Next, let’s look at how to upgrade peer containers to Fabric v1.4. Peer containers should,
+like the orderers, be upgraded in a rolling fashion (one at a time). As mentioned
+during the orderer upgrade, orderers and peers may be upgraded in parallel, but for
+the purposes of this tutorial we’ve separated the processes out. At a high level,
+we will perform the following steps:</p>
+<ol class="arabic simple">
+<li>Stop the peer.</li>
+<li>Back up the peer’s ledger and MSP.</li>
+<li>Remove chaincode containers and images.</li>
+<li>Restart the peer with latest image.</li>
+<li>Verify upgrade completion.</li>
+</ol>
+<p>We have four peers running in our network. We will perform this process once for
+each peer, totaling four upgrades.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Again, this tutorial utilizes a docker deployment. For <strong>native</strong>
+deployments, replace the file <code class="docutils literal notranslate"><span class="pre">peer</span></code> with the one from the release
+artifacts. Backup your <code class="docutils literal notranslate"><span class="pre">core.yaml</span></code> and replace it with the one from
+the release artifacts. Port any modified variables from the backed up
+<code class="docutils literal notranslate"><span class="pre">core.yaml</span></code> to the new one. Utilizing a utility like <code class="docutils literal notranslate"><span class="pre">diff</span></code> may be
+helpful.</p>
+</div>
+<p>Let’s <strong>bring down the first peer</strong> with the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export PEER=peer0.org1.example.com
+
+docker stop $PEER
+</pre></div>
+</div>
+<p>We can then <strong>backup the peer’s ledger and MSP</strong>:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>mkdir -p $LEDGERS_BACKUP
+
+docker cp $PEER:/var/hyperledger/production ./$LEDGERS_BACKUP/$PEER
+</pre></div>
+</div>
+<p>With the peer stopped and the ledger backed up, <strong>remove the peer chaincode
+containers</strong>:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>CC_CONTAINERS=$(docker ps | grep dev-$PEER | awk &#39;{print $1}&#39;)
+if [ -n &quot;$CC_CONTAINERS&quot; ] ; then docker rm -f $CC_CONTAINERS ; fi
+</pre></div>
+</div>
+<p>And the peer chaincode images:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>CC_IMAGES=$(docker images | grep dev-$PEER | awk &#39;{print $1}&#39;)
+if [ -n &quot;$CC_IMAGES&quot; ] ; then docker rmi -f $CC_IMAGES ; fi
+</pre></div>
+</div>
+<p>Now we’ll re-launch the peer using the v1.4 image tag:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>docker-compose -f docker-compose-cli.yaml up -d --no-deps $PEER
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Although, BYFN supports using CouchDB, we opted for a simpler
+implementation in this tutorial. If you are using CouchDB, however,
+issue this command instead of the one above:</p>
+</div>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>docker-compose -f docker-compose-cli.yaml -f docker-compose-couch.yaml up -d --no-deps $PEER
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You do not need to relaunch the chaincode container. When the peer gets
+a request for a chaincode, (invoke or query), it first checks if it has
+a copy of that chaincode running. If so, it uses it. Otherwise, as in
+this case, the peer launches the chaincode (rebuilding the image if
+required).</p>
+</div>
+<div class="section" id="verify-peer-upgrade-completion">
+<h3>Verify peer upgrade completion<a class="headerlink" href="#verify-peer-upgrade-completion" title="Permalink to this headline">¶</a></h3>
+<p>We’ve completed the upgrade for our first peer, but before we move on let’s check
+to ensure the upgrade has been completed properly with a chaincode invoke.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before you attempt this, you may want to upgrade peers from
+enough organizations to satisfy your endorsement policy.
+Although, this is only mandatory if you are updating your chaincode
+as part of the upgrade process. If you are not updating your chaincode
+as part of the upgrade process, it is possible to get endorsements
+from peers running at different Fabric versions.</p>
+</div>
+<p>Before we get into the CLI container and issue the invoke, make sure the CLI is
+updated to the most current version by issuing:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">cli</span><span class="o">.</span><span class="n">yaml</span> <span class="n">stop</span> <span class="n">cli</span>
+
+<span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">cli</span><span class="o">.</span><span class="n">yaml</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">deps</span> <span class="n">cli</span>
+</pre></div>
+</div>
+<p>If you specifically want the v1.3 version of the CLI, issue:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>IMAGE_TAG=$(go env GOARCH)-1.3.x docker-compose -f docker-compose-cli.yaml up -d --no-deps cli
+</pre></div>
+</div>
+<p>Once you have the version of the CLI you want, get into the CLI container:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">cli</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>Now you’ll need to set two environment variables — the name of the channel and
+the name of the <code class="docutils literal notranslate"><span class="pre">ORDERER_CA</span></code>:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CH_NAME</span><span class="o">=</span><span class="n">mychannel</span>
+
+<span class="n">ORDERER_CA</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">ordererOrganizations</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">orderers</span><span class="o">/</span><span class="n">orderer</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">msp</span><span class="o">/</span><span class="n">tlscacerts</span><span class="o">/</span><span class="n">tlsca</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">-</span><span class="n">cert</span><span class="o">.</span><span class="n">pem</span>
+</pre></div>
+</div>
+<p>Now you can issue the invoke:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>peer chaincode invoke -o orderer.example.com:7050 --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --tls --cafile $ORDERER_CA  -C $CH_NAME -n mycc -c &#39;{&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]}&#39;
+</pre></div>
+</div>
+<p>Our query earlier revealed <code class="docutils literal notranslate"><span class="pre">a</span></code> to have a value of <code class="docutils literal notranslate"><span class="pre">90</span></code> and we have just removed
+<code class="docutils literal notranslate"><span class="pre">10</span></code> with our invoke. Therefore, a query against <code class="docutils literal notranslate"><span class="pre">a</span></code> should reveal <code class="docutils literal notranslate"><span class="pre">80</span></code>.
+Let’s see:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>We should see the following:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Query</span> <span class="n">Result</span><span class="p">:</span> <span class="mi">80</span>
+</pre></div>
+</div>
+<p>After verifying the peer was upgraded correctly, make sure to issue an <code class="docutils literal notranslate"><span class="pre">exit</span></code>
+to leave the container before continuing to upgrade your peers. You can
+do this by repeating the process above with a different peer name exported.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">PEER</span><span class="o">=</span><span class="n">peer1</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">export</span> <span class="n">PEER</span><span class="o">=</span><span class="n">peer0</span><span class="o">.</span><span class="n">org2</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">export</span> <span class="n">PEER</span><span class="o">=</span><span class="n">peer1</span><span class="o">.</span><span class="n">org2</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="upgrading-components-byfn-does-not-support">
+<h2>Upgrading components BYFN does not support<a class="headerlink" href="#upgrading-components-byfn-does-not-support" title="Permalink to this headline">¶</a></h2>
+<p>Although this is the end of our update tutorial, there are other components that
+exist in production networks that are not compatible with the BYFN sample. In this
+section, we’ll talk through the process of updating them.</p>
+<div class="section" id="fabric-ca-container">
+<h3>Fabric CA container<a class="headerlink" href="#fabric-ca-container" title="Permalink to this headline">¶</a></h3>
+<p>To learn how to upgrade your Fabric CA server, click over to the
+<a class="reference external" href="http://hyperledger-fabric-ca.readthedocs.io/en/latest/users-guide.html#upgrading-the-server">CA documentation</a>.</p>
+</div>
+<div class="section" id="upgrade-node-sdk-clients">
+<h3>Upgrade Node SDK clients<a class="headerlink" href="#upgrade-node-sdk-clients" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Upgrade Fabric and Fabric CA before upgrading Node SDK clients.
+Fabric and Fabric CA are tested for backwards compatibility with
+older SDK clients. While newer SDK clients often work with older
+Fabric and Fabric CA releases, they may expose features that
+are not yet available in the older Fabric and Fabric CA releases,
+and are not tested for full compatibility.</p>
+</div>
+<p>Use NPM to upgrade any <code class="docutils literal notranslate"><span class="pre">Node.js</span></code> client by executing these commands in the
+root directory of your application:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">npm</span> <span class="n">install</span> <span class="n">fabric</span><span class="o">-</span><span class="n">client</span><span class="nd">@latest</span>
+
+<span class="n">npm</span> <span class="n">install</span> <span class="n">fabric</span><span class="o">-</span><span class="n">ca</span><span class="o">-</span><span class="n">client</span><span class="nd">@latest</span>
+</pre></div>
+</div>
+<p>These commands install the new version of both the Fabric client and Fabric-CA
+client and write the new versions <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</p>
+</div>
+<div class="section" id="upgrading-the-kafka-cluster">
+<h3>Upgrading the Kafka cluster<a class="headerlink" href="#upgrading-the-kafka-cluster" title="Permalink to this headline">¶</a></h3>
+<p>It is not required, but it is recommended that the Kafka cluster be upgraded and
+kept up to date along with the rest of Fabric. Newer versions of Kafka support
+older protocol versions, so you may upgrade Kafka before or after the rest of
+Fabric.</p>
+<p>If you followed the <a class="reference external" href="http://hyperledger-fabric.readthedocs.io/en/release-1.3/upgrading_your_network_tutorial.html">Upgrading Your Network to v1.3 tutorial</a>,
+your Kafka cluster should be at v1.0.0. If it isn’t, refer to the official Apache
+Kafka documentation on <a class="reference external" href="https://kafka.apache.org/documentation/#upgrade">upgrading Kafka from previous versions</a> to upgrade the
+Kafka cluster brokers.</p>
+<div class="section" id="upgrading-zookeeper">
+<h4>Upgrading Zookeeper<a class="headerlink" href="#upgrading-zookeeper" title="Permalink to this headline">¶</a></h4>
+<p>An Apache Kafka cluster requires an Apache Zookeeper cluster. The Zookeeper API
+has been stable for a long time and, as such, almost any version of Zookeeper is
+tolerated by Kafka. Refer to the <a class="reference external" href="https://kafka.apache.org/documentation/#upgrade">Apache Kafka upgrade</a> documentation in case
+there is a specific requirement to upgrade to a specific version of Zookeeper.
+If you would like to upgrade your Zookeeper cluster, some information on
+upgrading Zookeeper cluster can be found in the <a class="reference external" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/FAQ">Zookeeper FAQ</a>.</p>
+</div>
+</div>
+<div class="section" id="upgrading-couchdb">
+<h3>Upgrading CouchDB<a class="headerlink" href="#upgrading-couchdb" title="Permalink to this headline">¶</a></h3>
+<p>If you are using CouchDB as state database, you should upgrade the peer’s
+CouchDB at the same time the peer is being upgraded. CouchDB v2.2.0 has
+been tested with Fabric v1.4.</p>
+<p>To upgrade CouchDB:</p>
+<ol class="arabic simple">
+<li>Stop CouchDB.</li>
+<li>Backup CouchDB data directory.</li>
+<li>Install CouchDB v2.2.0 binaries or update deployment scripts to use a new Docker image
+(CouchDB v2.2.0 pre-configured Docker image is provided alongside Fabric v1.4).</li>
+<li>Restart CouchDB.</li>
+</ol>
+</div>
+<div class="section" id="upgrade-node-chaincode-shim">
+<h3>Upgrade Node chaincode shim<a class="headerlink" href="#upgrade-node-chaincode-shim" title="Permalink to this headline">¶</a></h3>
+<p>To move to the new version of the Node chaincode shim a developer would need to:</p>
+<ol class="arabic simple">
+<li>Change the level of <code class="docutils literal notranslate"><span class="pre">fabric-shim</span></code> in their chaincode <code class="docutils literal notranslate"><span class="pre">package.json</span></code> from
+1.3 to 1.4.</li>
+<li>Repackage this new chaincode package and install it on all the endorsing peers
+in the channel.</li>
+<li>Perform an upgrade to this new chaincode. To see how to do this, check out <a class="reference internal" href="commands/peerchaincode.html"><span class="doc">peer chaincode</span></a>.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This flow isn’t specific to moving from 1.3 to 1.4. It is also how
+one would upgrade from any incremental version of the node fabric shim.</p>
+</div>
+</div>
+<div class="section" id="upgrade-chaincodes-with-vendored-shim">
+<h3>Upgrade Chaincodes with vendored shim<a class="headerlink" href="#upgrade-chaincodes-with-vendored-shim" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The v1.3.0 shim is compatible with the v1.4 peer, but, it is still
+best practice to upgrade the chaincode shim to match the current level
+of the peer.</p>
+</div>
+<p>A number of third party tools exist that will allow you to vendor a chaincode
+shim. If you used one of these tools, use the same one to update your vendoring
+and re-package your chaincode.</p>
+<p>If your chaincode vendors the shim, after updating the shim version, you must install
+it to all peers which already have the chaincode. Install it with the same name, but
+a newer version. Then you should execute a chaincode upgrade on each channel where
+this chaincode has been deployed to move to the new version.</p>
+<p>If you did not vendor your chaincode, you can skip this step entirely.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="private_data_tutorial.html" class="btn btn-neutral float-right" title="Using Private Data in Fabric" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="channel_update_tutorial.html" class="btn btn-neutral" title="Adding an Org to a Channel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Hyperledger 2019.
+    <br>
+      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

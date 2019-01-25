@@ -1,0 +1,980 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Private Data in Fabric &mdash; hyperledger-fabricdocs master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chaincode Tutorials" href="chaincode.html" />
+    <link rel="prev" title="Upgrading Your Network Components" href="upgrading_your_network_tutorial.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="index.html" class="icon icon-home"> hyperledger-fabricdocs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="Hyperledger Fabric" src=_images/hyperledger_fabric_logo_color.png />
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="_static/images/github_button.png"/></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="StackOverflow" src="_static/images/stackoverflow_button.png"/></a>
+&nbsp;<a href="https://chat.hyperledger.org"><img style="padding: 0px; margin: auto auto auto auto;" alt="Rocket Chat" src="_static/images/rocketchat_button.png"/></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="Youtube Channel" src="_static/images/youtube_button.png"/></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="whatis.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html">What’s new in v1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html#release-notes">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developapps/developing_applications.html">Developing Applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="write_first_app.html">Writing Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/commercial_paper.html">Commercial paper tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_network.html">Building Your First Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="channel_update_tutorial.html">Adding an Org to a Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrading_your_network_tutorial.html">Upgrading Your Network Components</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Private Data in Fabric</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#build-a-collection-definition-json-file">Build a collection definition JSON file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-and-write-private-data-using-chaincode-apis">Read and Write private data using chaincode APIs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#reading-collection-data">Reading collection data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#writing-private-data">Writing private data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#start-the-network">Start the network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-and-instantiate-chaincode-with-a-collection">Install and instantiate chaincode with a collection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-chaincode-on-all-peers">Install chaincode on all peers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instantiate-the-chaincode-on-the-channel">Instantiate the chaincode on the channel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#store-private-data">Store private data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-the-private-data-as-an-authorized-peer">Query the private data as an authorized peer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-the-private-data-as-an-unauthorized-peer">Query the private data as an unauthorized peer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#switch-to-a-peer-in-org2">Switch to a peer in Org2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#query-private-data-org2-is-authorized-to">Query private data Org2 is authorized to</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#query-private-data-org2-is-not-authorized-to">Query private data Org2 is not authorized to</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#purge-private-data">Purge Private Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-indexes-with-private-data">Using indexes with private data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-resources">Additional resources</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode.html">Chaincode Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode4ade.html">Chaincode for Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chaincode4noah.html">Chaincode for Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemchaincode.html">System Chaincode Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="couchdb_tutorial.html">Using CouchDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videos.html">Videos</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ops_guide.html">Operations Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Commands Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fabric-FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributions Welcome!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="questions.html">Still Have Questions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Status</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hyperledger-fabricdocs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+        
+      <li>Using Private Data in Fabric</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/private_data_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-private-data-in-fabric">
+<h1>Using Private Data in Fabric<a class="headerlink" href="#using-private-data-in-fabric" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will demonstrate the use of collections to provide storage
+and retrieval of private data on the blockchain network for authorized peers
+of organizations.</p>
+<p>The information in this tutorial assumes knowledge of private data
+stores and their use cases. For more information, check out <a class="reference internal" href="private-data/private-data.html"><span class="doc">Private data</span></a>.</p>
+<p>The tutorial will take you through the following steps to practice defining,
+configuring and using private data with Fabric:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#pd-build-json"><span class="std std-ref">Build a collection definition JSON file</span></a></li>
+<li><a class="reference internal" href="#pd-read-write-private-data"><span class="std std-ref">Read and Write private data using chaincode APIs</span></a></li>
+<li><a class="reference internal" href="#pd-install-instantiate-cc"><span class="std std-ref">Install and instantiate chaincode with a collection</span></a></li>
+<li><a class="reference internal" href="#pd-store-private-data"><span class="std std-ref">Store private data</span></a></li>
+<li><a class="reference internal" href="#pd-query-authorized"><span class="std std-ref">Query the private data as an authorized peer</span></a></li>
+<li><a class="reference internal" href="#pd-query-unauthorized"><span class="std std-ref">Query the private data as an unauthorized peer</span></a></li>
+<li><a class="reference internal" href="#pd-purge"><span class="std std-ref">Purge Private Data</span></a></li>
+<li><a class="reference internal" href="#pd-indexes"><span class="std std-ref">Using indexes with private data</span></a></li>
+<li><a class="reference internal" href="#pd-ref-material"><span class="std std-ref">Additional resources</span></a></li>
+</ol>
+<p>This tutorial will use the <a class="reference external" href="https://github.com/hyperledger/fabric-samples/tree/master/chaincode/marbles02_private">marbles private data sample</a>
+— running on the Building Your First Network (BYFN) tutorial network — to
+demonstrate how to create, deploy, and use a collection of private data.
+The marbles private data sample will be deployed to the <a class="reference internal" href="build_network.html"><span class="doc">Building Your First Network</span></a>
+(BYFN) tutorial network. You should have completed the task <a class="reference internal" href="install.html"><span class="doc">Install Samples, Binaries and Docker Images</span></a>;
+however, running the BYFN tutorial is not a prerequisite for this tutorial.
+Instead the necessary commands are provided throughout this tutorial to use the
+network. We will describe what is happening at each step, making it possible to
+understand the tutorial without actually running the sample.</p>
+<div class="section" id="build-a-collection-definition-json-file">
+<span id="pd-build-json"></span><h2>Build a collection definition JSON file<a class="headerlink" href="#build-a-collection-definition-json-file" title="Permalink to this headline">¶</a></h2>
+<p>The first step in privatizing data on a channel is to build a collection
+definition which defines access to the private data.</p>
+<p>The collection definition describes who can persist data, how many peers the
+data is distributed to, how many peers are required to disseminate the private
+data, and how long the private data is persisted in the private database. Later,
+we will demonstrate how chaincode APIs <code class="docutils literal notranslate"><span class="pre">PutPrivateData</span></code> and <code class="docutils literal notranslate"><span class="pre">GetPrivateData</span></code>
+are used to map the collection to the private data being secured.</p>
+<p>A collection definition is composed of the following properties:</p>
+<ul class="simple" id="blocktolive">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code>: Name of the collection.</li>
+<li><code class="docutils literal notranslate"><span class="pre">policy</span></code>: Defines the organization peers allowed to persist the collection data.</li>
+<li><code class="docutils literal notranslate"><span class="pre">requiredPeerCount</span></code>: Number of peers required to disseminate the private data as
+a condition of the endorsement of the chaincode</li>
+<li><code class="docutils literal notranslate"><span class="pre">maxPeerCount</span></code>: For data redundancy purposes, the number of other peers
+that the current endorsing peer will attempt to distribute the data to.
+If an endorsing peer goes down, these other peers are available at commit time
+if there are requests to pull the private data.</li>
+<li><code class="docutils literal notranslate"><span class="pre">blockToLive</span></code>: For very sensitive information such as pricing or personal information,
+this value represents how long the data should live on the private database in terms
+of blocks. The data will live for this specified number of blocks on the private database
+and after that it will get purged, making this data obsolete from the network.
+To keep private data indefinitely, that is, to never purge private data, set
+the <code class="docutils literal notranslate"><span class="pre">blockToLive</span></code> property to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">memberOnlyRead</span></code>: a value of <code class="docutils literal notranslate"><span class="pre">true</span></code> indicates that peers automatically
+enforce that only clients belonging to one of the collection member organizations
+are allowed read access to private data.</li>
+</ul>
+<p>To illustrate usage of private data, the marbles private data example contains
+two private data collection definitions: <code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code>
+and <code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code>. The <code class="docutils literal notranslate"><span class="pre">policy</span></code> property in the
+<code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code> definition allows all members of  the channel (Org1 and
+Org2) to have the private data in a private database. The
+<code class="docutils literal notranslate"><span class="pre">collectionMarblesPrivateDetails</span></code> collection allows only members of Org1 to
+have the private data in their private database.</p>
+<p>For more information on building a policy definition refer to the <a class="reference internal" href="endorsement-policies.html"><span class="doc">Endorsement policies</span></a>
+topic.</p>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">collections_config</span><span class="o">.</span><span class="n">json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+       <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;collectionMarbles&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;policy&quot;</span><span class="p">:</span> <span class="s2">&quot;OR(&#39;Org1MSP.member&#39;, &#39;Org2MSP.member&#39;)&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;requiredPeerCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+       <span class="s2">&quot;maxPeerCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+       <span class="s2">&quot;blockToLive&quot;</span><span class="p">:</span><span class="mi">1000000</span><span class="p">,</span>
+       <span class="s2">&quot;memberOnlyRead&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+       <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;collectionMarblePrivateDetails&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;policy&quot;</span><span class="p">:</span> <span class="s2">&quot;OR(&#39;Org1MSP.member&#39;)&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;requiredPeerCount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+       <span class="s2">&quot;maxPeerCount&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+       <span class="s2">&quot;blockToLive&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span>
+       <span class="s2">&quot;memberOnlyRead&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The data to be secured by these policies is mapped in chaincode and will be
+shown later in the tutorial.</p>
+<p>This collection definition file is deployed on the channel when its associated
+chaincode is instantiated on the channel using the <a class="reference external" href="http://hyperledger-fabric.readthedocs.io/en/latest/commands/peerchaincode.html#peer-chaincode-instantiate">peer chaincode instantiate command</a>.
+More details on this process are provided in Section 3 below.</p>
+</div>
+<div class="section" id="read-and-write-private-data-using-chaincode-apis">
+<span id="pd-read-write-private-data"></span><h2>Read and Write private data using chaincode APIs<a class="headerlink" href="#read-and-write-private-data-using-chaincode-apis" title="Permalink to this headline">¶</a></h2>
+<p>The next step in understanding how to privatize data on a channel is to build
+the data definition in the chaincode.  The marbles private data sample divides
+the private data into two separate data definitions according to how the data will
+be accessed.</p>
+<div class="highlight-GO notranslate"><div class="highlight"><pre><span></span><span class="c1">// Peers in Org1 and Org2 will have this private data in a side database</span>
+<span class="kd">type</span> <span class="nx">marble</span> <span class="kd">struct</span> <span class="p">{</span>
+  <span class="nx">ObjectType</span> <span class="kt">string</span> <span class="s">`json:&quot;docType&quot;`</span>
+  <span class="nx">Name</span>       <span class="kt">string</span> <span class="s">`json:&quot;name&quot;`</span>
+  <span class="nx">Color</span>      <span class="kt">string</span> <span class="s">`json:&quot;color&quot;`</span>
+  <span class="nx">Size</span>       <span class="kt">int</span>    <span class="s">`json:&quot;size&quot;`</span>
+  <span class="nx">Owner</span>      <span class="kt">string</span> <span class="s">`json:&quot;owner&quot;`</span>
+<span class="p">}</span>
+
+<span class="c1">// Only peers in Org1 will have this private data in a side database</span>
+<span class="kd">type</span> <span class="nx">marblePrivateDetails</span> <span class="kd">struct</span> <span class="p">{</span>
+  <span class="nx">ObjectType</span> <span class="kt">string</span> <span class="s">`json:&quot;docType&quot;`</span>
+  <span class="nx">Name</span>       <span class="kt">string</span> <span class="s">`json:&quot;name&quot;`</span>
+  <span class="nx">Price</span>      <span class="kt">int</span>    <span class="s">`json:&quot;price&quot;`</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Specifically access to the private data will be restricted as follows:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size,</span> <span class="pre">and</span> <span class="pre">owner</span></code> will be visible to all members of the channel (Org1 and Org2)</li>
+<li><code class="docutils literal notranslate"><span class="pre">price</span></code> only visible to members of Org1</li>
+</ul>
+<p>Thus two different sets of private data are defined in the marbles private data
+sample. The mapping of this data to the collection policy which restricts its
+access is controlled by chaincode APIs. Specifically, reading and writing
+private data using a collection definition is performed by calling <code class="docutils literal notranslate"><span class="pre">GetPrivateData()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">PutPrivateData()</span></code>, which can be found <a class="reference external" href="https://github.com/hyperledger/fabric/blob/master/core/chaincode/shim/interfaces.go#L179">here</a>.</p>
+<p>The following diagrams illustrate the private data model used by the marbles
+private data sample.</p>
+<blockquote>
+<div><img alt="_images/SideDB-org1.png" src="_images/SideDB-org1.png" />
+<img alt="_images/SideDB-org2.png" src="_images/SideDB-org2.png" />
+</div></blockquote>
+<div class="section" id="reading-collection-data">
+<h3>Reading collection data<a class="headerlink" href="#reading-collection-data" title="Permalink to this headline">¶</a></h3>
+<p>Use the chaincode API <code class="docutils literal notranslate"><span class="pre">GetPrivateData()</span></code> to query private data in the
+database.  <code class="docutils literal notranslate"><span class="pre">GetPrivateData()</span></code> takes two arguments, the <strong>collection name</strong>
+and the data key. Recall the collection  <code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code> allows members of
+Org1 and Org2 to have the private data in a side database, and the collection
+<code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code> allows only members of Org1 to have the
+private data in a side database. For implementation details refer to the
+following two <a class="reference external" href="https://github.com/hyperledger/fabric-samples/blob/master/chaincode/marbles02_private/go/marbles_chaincode_private.go">marbles private data functions</a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>readMarble</strong> for querying the values of the <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size</span> <span class="pre">and</span> <span class="pre">owner</span></code> attributes</li>
+<li><strong>readMarblePrivateDetails</strong> for querying the values of the <code class="docutils literal notranslate"><span class="pre">price</span></code> attribute</li>
+</ul>
+</div></blockquote>
+<p>When we issue the database queries using the peer commands later in this tutorial,
+we will call these two functions.</p>
+</div>
+<div class="section" id="writing-private-data">
+<h3>Writing private data<a class="headerlink" href="#writing-private-data" title="Permalink to this headline">¶</a></h3>
+<p>Use the chaincode API <code class="docutils literal notranslate"><span class="pre">PutPrivateData()</span></code> to store the private data
+into the private database. The API also requires the name of the collection.
+Since the marbles private data sample includes two different collections, it is called
+twice in the chaincode:</p>
+<ol class="arabic simple">
+<li>Write the private data <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size</span> <span class="pre">and</span> <span class="pre">owner</span></code> using the
+collection named <code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code>.</li>
+<li>Write the private data <code class="docutils literal notranslate"><span class="pre">price</span></code> using the collection named
+<code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code>.</li>
+</ol>
+<p>For example, in the following snippet of the <code class="docutils literal notranslate"><span class="pre">initMarble</span></code> function,
+<code class="docutils literal notranslate"><span class="pre">PutPrivateData()</span></code> is called twice, once for each set of private data.</p>
+<div class="highlight-GO notranslate"><div class="highlight"><pre><span></span><span class="c1">// ==== Create marble object, marshal to JSON, and save to state ====</span>
+      <span class="nx">marble</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">marble</span><span class="p">{</span>
+              <span class="nx">ObjectType</span><span class="p">:</span> <span class="s">&quot;marble&quot;</span><span class="p">,</span>
+              <span class="nx">Name</span><span class="p">:</span>       <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+              <span class="nx">Color</span><span class="p">:</span>      <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span>
+              <span class="nx">Size</span><span class="p">:</span>       <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Size</span><span class="p">,</span>
+              <span class="nx">Owner</span><span class="p">:</span>      <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Owner</span><span class="p">,</span>
+      <span class="p">}</span>
+      <span class="nx">marbleJSONasBytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">marble</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+      <span class="p">}</span>
+
+      <span class="c1">// === Save marble to state ===</span>
+      <span class="nx">err</span> <span class="p">=</span> <span class="nx">stub</span><span class="p">.</span><span class="nx">PutPrivateData</span><span class="p">(</span><span class="s">&quot;collectionMarbles&quot;</span><span class="p">,</span> <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">marbleJSONasBytes</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+      <span class="p">}</span>
+
+      <span class="c1">// ==== Create marble private details object with price, marshal to JSON, and save to state ====</span>
+      <span class="nx">marblePrivateDetails</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">marblePrivateDetails</span><span class="p">{</span>
+              <span class="nx">ObjectType</span><span class="p">:</span> <span class="s">&quot;marblePrivateDetails&quot;</span><span class="p">,</span>
+              <span class="nx">Name</span><span class="p">:</span>       <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+              <span class="nx">Price</span><span class="p">:</span>      <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Price</span><span class="p">,</span>
+      <span class="p">}</span>
+      <span class="nx">marblePrivateDetailsBytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">marblePrivateDetails</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+      <span class="p">}</span>
+      <span class="nx">err</span> <span class="p">=</span> <span class="nx">stub</span><span class="p">.</span><span class="nx">PutPrivateData</span><span class="p">(</span><span class="s">&quot;collectionMarblePrivateDetails&quot;</span><span class="p">,</span> <span class="nx">marbleInput</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">marblePrivateDetailsBytes</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">())</span>
+      <span class="p">}</span>
+</pre></div>
+</div>
+<p>To summarize, the policy definition above for our <code class="docutils literal notranslate"><span class="pre">collection.json</span></code>
+allows all peers in Org1 and Org2 to store and transact
+with the marbles private data <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size,</span> <span class="pre">owner</span></code> in their
+private database. But only peers in Org1 can store and transact with
+the <code class="docutils literal notranslate"><span class="pre">price</span></code> private data in its private database.</p>
+<p>As an additional data privacy benefit, since a collection is being used,
+only the private data hashes go through orderer, not the private data itself,
+keeping private data confidential from orderer.</p>
+</div>
+</div>
+<div class="section" id="start-the-network">
+<h2>Start the network<a class="headerlink" href="#start-the-network" title="Permalink to this headline">¶</a></h2>
+<p>Now we are ready to step through some commands which demonstrate using private
+data.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<p>Before installing and instantiating the marbles private data chaincode below,
+we need to start the BYFN network. For the sake of this tutorial, we want to
+operate from a known initial state. The following command will kill any active
+or stale docker containers and remove previously generated artifacts.
+Therefore let’s run the following command to clean up any previous
+environments:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">first</span><span class="o">-</span><span class="n">network</span>
+<span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">down</span>
+</pre></div>
+</div>
+<p>If you’ve already run through this tutorial, you’ll also want to delete the
+underlying docker containers for the marbles private data chaincode. Let’s
+run the following commands to clean up previous environments:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>docker rm -f $(docker ps -a | awk &#39;($2 ~ /dev-peer.*.marblesp.*/) {print $1}&#39;)
+docker rmi -f $(docker images | awk &#39;($1 ~ /dev-peer.*.marblesp.*/) {print $3}&#39;)
+</pre></div>
+</div>
+<p>Start up the BYFN network with CouchDB by running the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">byfn</span><span class="o">.</span><span class="n">sh</span> <span class="n">up</span> <span class="o">-</span><span class="n">c</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">s</span> <span class="n">couchdb</span>
+</pre></div>
+</div>
+<p>This will create a simple Fabric network consisting of a single channel named
+<code class="docutils literal notranslate"><span class="pre">mychannel</span></code> with two organizations (each maintaining two peer nodes) and an
+ordering service while using CouchDB as the state database. Either LevelDB
+or CouchDB may be used with collections. CouchDB was chosen to demonstrate
+how to use indexes with private data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For collections to work, it is important to have cross organizational
+gossip configured correctly. Refer to our documentation on <a class="reference internal" href="gossip.html"><span class="doc">Gossip data dissemination protocol</span></a>,
+paying particular attention to the section on “anchor peers”. Our tutorial
+does not focus on gossip given it is already configured in the BYFN sample,
+but when configuring a channel, the gossip anchors peers are critical to
+configure for collections to work properly.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="install-and-instantiate-chaincode-with-a-collection">
+<span id="pd-install-instantiate-cc"></span><h2>Install and instantiate chaincode with a collection<a class="headerlink" href="#install-and-instantiate-chaincode-with-a-collection" title="Permalink to this headline">¶</a></h2>
+<p>Client applications interact with the blockchain ledger through chaincode. As
+such we need to install and instantiate the chaincode on every peer that will
+execute and endorse our transactions. Chaincode is installed onto a peer and
+then instantiated onto the channel using <span class="xref std std-doc">peer-commands</span>.</p>
+<div class="section" id="install-chaincode-on-all-peers">
+<h3>Install chaincode on all peers<a class="headerlink" href="#install-chaincode-on-all-peers" title="Permalink to this headline">¶</a></h3>
+<p>As discussed above, the BYFN network includes two organizations, Org1 and Org2,
+with two peers each. Therefore the chaincode has to be installed on four peers:</p>
+<ul class="simple">
+<li>peer0.org1.example.com</li>
+<li>peer1.org1.example.com</li>
+<li>peer0.org2.example.com</li>
+<li>peer1.org2.example.com</li>
+</ul>
+<p>Use the <a class="reference external" href="http://hyperledger-fabric.readthedocs.io/en/master/commands/peerchaincode.html?%20chaincode%20instantiate#peer-chaincode-install">peer chaincode install</a> command to install the Marbles chaincode on each peer.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<p>Assuming you have started the BYFN network, enter the CLI container.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">cli</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>Your command prompt will change to something similar to:</p>
+<p><code class="docutils literal notranslate"><span class="pre">root&#64;81eac8493633:/opt/gopath/src/github.com/hyperledger/fabric/peer#</span></code></p>
+<ol class="arabic">
+<li><p class="first">Use the following command to install the Marbles chaincode from the git
+repository onto the peer <code class="docutils literal notranslate"><span class="pre">peer0.org1.example.com</span></code> in your BYFN network.
+(By default, after starting the BYFN network, the active peer is set to:
+<code class="docutils literal notranslate"><span class="pre">CORE_PEER_ADDRESS=peer0.org1.example.com:7051</span></code>):</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">marbles02_private</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>When it is complete you should see something similar to:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">install</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">003</span> <span class="n">Installed</span> <span class="n">remotely</span> <span class="n">response</span><span class="p">:</span><span class="o">&lt;</span><span class="n">status</span><span class="p">:</span><span class="mi">200</span> <span class="n">payload</span><span class="p">:</span><span class="s2">&quot;OK&quot;</span> <span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use the CLI to switch the active peer to the second peer in Org1 and
+install the chaincode. Copy and paste the following entire block of
+commands into the CLI container and run them.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CORE_PEER_ADDRESS</span><span class="o">=</span><span class="n">peer1</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">7051</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">marbles02_private</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use the CLI to switch to Org2. Copy and paste the following block of
+commands as a group into the peer container and run them all at once.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export CORE_PEER_LOCALMSPID=Org2MSP
+export PEER0_ORG2_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+</pre></div>
+</div>
+</li>
+<li><p class="first">Switch the active peer to the first peer in Org2 and install the chaincode:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CORE_PEER_ADDRESS</span><span class="o">=</span><span class="n">peer0</span><span class="o">.</span><span class="n">org2</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">7051</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">marbles02_private</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Switch the active peer to the second peer in org2 and install the chaincode:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CORE_PEER_ADDRESS</span><span class="o">=</span><span class="n">peer1</span><span class="o">.</span><span class="n">org2</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">7051</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">marbles02_private</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="instantiate-the-chaincode-on-the-channel">
+<h3>Instantiate the chaincode on the channel<a class="headerlink" href="#instantiate-the-chaincode-on-the-channel" title="Permalink to this headline">¶</a></h3>
+<p>Use the <a class="reference external" href="http://hyperledger-fabric.readthedocs.io/en/master/commands/peerchaincode.html?%20chaincode%20instantiate#peer-chaincode-instantiate">peer chaincode instantiate</a>
+command to instantiate the marbles chaincode on a channel. To configure
+the chaincode collections on the channel, specify the flag <code class="docutils literal notranslate"><span class="pre">--collections-config</span></code>
+along with the name of the collections JSON file, <code class="docutils literal notranslate"><span class="pre">collections_config.json</span></code> in our
+example.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<p>Run the following commands to instantiate the marbles private data
+chaincode on the BYFN channel <code class="docutils literal notranslate"><span class="pre">mychannel</span></code>.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile $ORDERER_CA -C mychannel -n marblesp -v 1.0 -c &#39;{&quot;Args&quot;:[&quot;init&quot;]}&#39; -P &quot;OR(&#39;Org1MSP.member&#39;,&#39;Org2MSP.member&#39;)&quot; --collections-config  $GOPATH/src/github.com/chaincode/marbles02_private/collections_config.json
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When specifying the value of the <code class="docutils literal notranslate"><span class="pre">--collections-config</span></code> flag, you will
+need to specify the fully qualified path to the collections_config.json file.
+For example: <code class="docutils literal notranslate"><span class="pre">--collections-config</span>&#160; <span class="pre">$GOPATH/src/github.com/chaincode/marbles02_private/collections_config.json</span></code></p>
+</div>
+<p>When the instantiation completes successfully you should see something similar to:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">chaincodeCmd</span><span class="p">]</span> <span class="n">checkChaincodeCmdParams</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">001</span> <span class="n">Using</span> <span class="n">default</span> <span class="n">escc</span>
+<span class="p">[</span><span class="n">chaincodeCmd</span><span class="p">]</span> <span class="n">checkChaincodeCmdParams</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">002</span> <span class="n">Using</span> <span class="n">default</span> <span class="n">vscc</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="store-private-data">
+<span id="pd-store-private-data"></span><h2>Store private data<a class="headerlink" href="#store-private-data" title="Permalink to this headline">¶</a></h2>
+<p>Acting as a member of Org1, who is authorized to transact with all of the private data
+in the marbles private data sample, switch back to an Org1 peer and
+submit a request to add a marble:</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<p>Copy and paste the following set of commands to the CLI command line.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CORE_PEER_ADDRESS</span><span class="o">=</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">7051</span>
+<span class="n">export</span> <span class="n">CORE_PEER_LOCALMSPID</span><span class="o">=</span><span class="n">Org1MSP</span>
+<span class="n">export</span> <span class="n">CORE_PEER_TLS_ROOTCERT_FILE</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">peers</span><span class="o">/</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+<span class="n">export</span> <span class="n">CORE_PEER_MSPCONFIGPATH</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">Admin</span><span class="nd">@org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">msp</span>
+<span class="n">export</span> <span class="n">PEER0_ORG1_CA</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">peers</span><span class="o">/</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+<p>Invoke the marbles <code class="docutils literal notranslate"><span class="pre">initMarble</span></code> function which
+creates a marble with private data —  name <code class="docutils literal notranslate"><span class="pre">marble1</span></code> owned by <code class="docutils literal notranslate"><span class="pre">tom</span></code> with a color
+<code class="docutils literal notranslate"><span class="pre">blue</span></code>, size <code class="docutils literal notranslate"><span class="pre">35</span></code> and price of <code class="docutils literal notranslate"><span class="pre">99</span></code>. Recall that private data <strong>price</strong>
+will be stored separately from the private data <strong>name, owner, color, size</strong>.
+For this reason, the <code class="docutils literal notranslate"><span class="pre">initMarble</span></code> function calls the <code class="docutils literal notranslate"><span class="pre">PutPrivateData()</span></code> API
+twice to persist the private data, once for each collection. Also note that
+the private data is passed using the <code class="docutils literal notranslate"><span class="pre">--transient</span></code> flag. Inputs passed
+as transient data will not be persisted in the transaction in order to keep
+the data private. Transient data is passed as binary data and therefore when
+using CLI it must be base64 encoded. We use an environment variable
+to capture the base64 encoded value, and use <code class="docutils literal notranslate"><span class="pre">tr</span></code> command to strip off the
+problematic newline characters that linux base64 command adds.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export MARBLE=$(echo -n &quot;{\&quot;name\&quot;:\&quot;marble1\&quot;,\&quot;color\&quot;:\&quot;blue\&quot;,\&quot;size\&quot;:35,\&quot;owner\&quot;:\&quot;tom\&quot;,\&quot;price\&quot;:99}&quot; | base64 | tr -d \\n)
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n marblesp -c &#39;{&quot;Args&quot;:[&quot;initMarble&quot;]}&#39;  --transient &quot;{\&quot;marble\&quot;:\&quot;$MARBLE\&quot;}&quot;
+</pre></div>
+</div>
+<p>You should see results similar to:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[chaincodeCmd]</span> <span class="pre">chaincodeInvokeOrQuery-&gt;INFO</span> <span class="pre">001</span> <span class="pre">Chaincode</span> <span class="pre">invoke</span> <span class="pre">successful.</span> <span class="pre">result:</span> <span class="pre">status:200</span></code></p>
+</div></blockquote>
+</div>
+<div class="section" id="query-the-private-data-as-an-authorized-peer">
+<span id="pd-query-authorized"></span><h2>Query the private data as an authorized peer<a class="headerlink" href="#query-the-private-data-as-an-authorized-peer" title="Permalink to this headline">¶</a></h2>
+<p>Our collection definition allows all members of Org1 and Org2
+to have the <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size,</span> <span class="pre">owner</span></code> private data in their side database,
+but only peers in Org1 can have the <code class="docutils literal notranslate"><span class="pre">price</span></code> private data in their side
+database. As an authorized peer in Org1, we will query both sets of private data.</p>
+<p>The first <code class="docutils literal notranslate"><span class="pre">query</span></code> command calls the <code class="docutils literal notranslate"><span class="pre">readMarble</span></code> function which passes
+<code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code> as an argument.</p>
+<div class="highlight-GO notranslate"><div class="highlight"><pre><span></span><span class="c1">// ===============================================</span>
+<span class="c1">// readMarble - read a marble from chaincode state</span>
+<span class="c1">// ===============================================</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">SimpleChaincode</span><span class="p">)</span> <span class="nx">readMarble</span><span class="p">(</span><span class="nx">stub</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">ChaincodeStubInterface</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="nx">pb</span><span class="p">.</span><span class="nx">Response</span> <span class="p">{</span>
+     <span class="kd">var</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">jsonResp</span> <span class="kt">string</span>
+     <span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">{</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="s">&quot;Incorrect number of arguments. Expecting name of the marble to query&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+
+     <span class="nx">name</span> <span class="p">=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+     <span class="nx">valAsbytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">stub</span><span class="p">.</span><span class="nx">GetPrivateData</span><span class="p">(</span><span class="s">&quot;collectionMarbles&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="c1">//get the marble from chaincode state</span>
+
+     <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+             <span class="nx">jsonResp</span> <span class="p">=</span> <span class="s">&quot;{\&quot;Error\&quot;:\&quot;Failed to get state for &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&quot;\&quot;}&quot;</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">jsonResp</span><span class="p">)</span>
+     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">valAsbytes</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+             <span class="nx">jsonResp</span> <span class="p">=</span> <span class="s">&quot;{\&quot;Error\&quot;:\&quot;Marble does not exist: &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&quot;\&quot;}&quot;</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">jsonResp</span><span class="p">)</span>
+     <span class="p">}</span>
+
+     <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Success</span><span class="p">(</span><span class="nx">valAsbytes</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The second <code class="docutils literal notranslate"><span class="pre">query</span></code> command calls the <code class="docutils literal notranslate"><span class="pre">readMarblePrivateDetails</span></code>
+function which passes <code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code> as an argument.</p>
+<div class="highlight-GO notranslate"><div class="highlight"><pre><span></span><span class="c1">// ===============================================</span>
+<span class="c1">// readMarblePrivateDetails - read a marble private details from chaincode state</span>
+<span class="c1">// ===============================================</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">SimpleChaincode</span><span class="p">)</span> <span class="nx">readMarblePrivateDetails</span><span class="p">(</span><span class="nx">stub</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">ChaincodeStubInterface</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="nx">pb</span><span class="p">.</span><span class="nx">Response</span> <span class="p">{</span>
+     <span class="kd">var</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">jsonResp</span> <span class="kt">string</span>
+     <span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+
+     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">{</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="s">&quot;Incorrect number of arguments. Expecting name of the marble to query&quot;</span><span class="p">)</span>
+     <span class="p">}</span>
+
+     <span class="nx">name</span> <span class="p">=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+     <span class="nx">valAsbytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">stub</span><span class="p">.</span><span class="nx">GetPrivateData</span><span class="p">(</span><span class="s">&quot;collectionMarblePrivateDetails&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="c1">//get the marble private details from chaincode state</span>
+
+     <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+             <span class="nx">jsonResp</span> <span class="p">=</span> <span class="s">&quot;{\&quot;Error\&quot;:\&quot;Failed to get private details for &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">err</span><span class="p">.</span><span class="nx">Error</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;\&quot;}&quot;</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">jsonResp</span><span class="p">)</span>
+     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">valAsbytes</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+             <span class="nx">jsonResp</span> <span class="p">=</span> <span class="s">&quot;{\&quot;Error\&quot;:\&quot;Marble private details does not exist: &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&quot;\&quot;}&quot;</span>
+             <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">jsonResp</span><span class="p">)</span>
+     <span class="p">}</span>
+     <span class="k">return</span> <span class="nx">shim</span><span class="p">.</span><span class="nx">Success</span><span class="p">(</span><span class="nx">valAsbytes</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now <span class="guilabel">Try it yourself</span></p>
+<blockquote>
+<div><p>Query for the <code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size</span> <span class="pre">and</span> <span class="pre">owner</span></code> private data of <code class="docutils literal notranslate"><span class="pre">marble1</span></code> as a member of Org1.
+Note that since queries do not get recorded on the ledger, there is no need to pass
+the marble name as a transient input.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarble&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should see the following result:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marble&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;owner&quot;</span><span class="p">:</span><span class="s2">&quot;tom&quot;</span><span class="p">,</span><span class="s2">&quot;size&quot;</span><span class="p">:</span><span class="mi">35</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Query for the <code class="docutils literal notranslate"><span class="pre">price</span></code> private data of <code class="docutils literal notranslate"><span class="pre">marble1</span></code> as a member of Org1.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should see the following result:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marblePrivateDetails&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">99</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="query-the-private-data-as-an-unauthorized-peer">
+<span id="pd-query-unauthorized"></span><h2>Query the private data as an unauthorized peer<a class="headerlink" href="#query-the-private-data-as-an-unauthorized-peer" title="Permalink to this headline">¶</a></h2>
+<p>Now we will switch to a member of Org2 which has the marbles private data
+<code class="docutils literal notranslate"><span class="pre">name,</span> <span class="pre">color,</span> <span class="pre">size,</span> <span class="pre">owner</span></code> in its side database, but does not have the
+marbles <code class="docutils literal notranslate"><span class="pre">price</span></code> private data in its side database. We will query for both
+sets of private data.</p>
+<div class="section" id="switch-to-a-peer-in-org2">
+<h3>Switch to a peer in Org2<a class="headerlink" href="#switch-to-a-peer-in-org2" title="Permalink to this headline">¶</a></h3>
+<p>From inside the docker container, run the following commands to switch to
+the peer which is unauthorized to access the marbles <code class="docutils literal notranslate"><span class="pre">price</span></code> private data.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+export CORE_PEER_LOCALMSPID=Org2MSP
+export PEER0_ORG2_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="query-private-data-org2-is-authorized-to">
+<h3>Query private data Org2 is authorized to<a class="headerlink" href="#query-private-data-org2-is-authorized-to" title="Permalink to this headline">¶</a></h3>
+<p>Peers in Org2 should have the first set of marbles private data (<code class="docutils literal notranslate"><span class="pre">name,</span>
+<span class="pre">color,</span> <span class="pre">size</span> <span class="pre">and</span> <span class="pre">owner</span></code>) in their side database and can access it using the
+<code class="docutils literal notranslate"><span class="pre">readMarble()</span></code> function which is called with the <code class="docutils literal notranslate"><span class="pre">collectionMarbles</span></code>
+argument.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarble&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should see something similar to the following result:</p>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marble&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;color&quot;</span><span class="p">:</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="s2">&quot;size&quot;</span><span class="p">:</span><span class="mi">35</span><span class="p">,</span><span class="s2">&quot;owner&quot;</span><span class="p">:</span><span class="s2">&quot;tom&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="query-private-data-org2-is-not-authorized-to">
+<h3>Query private data Org2 is not authorized to<a class="headerlink" href="#query-private-data-org2-is-not-authorized-to" title="Permalink to this headline">¶</a></h3>
+<p>Peers in Org2 do not have the marbles <code class="docutils literal notranslate"><span class="pre">price</span></code> private data in their side database.
+When they try to query for this data, they get back a hash of the key matching
+the public state but will not have the private state.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should see a result similar to:</p>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;Error&quot;</span><span class="p">:</span><span class="s2">&quot;Failed to get private details for marble1: GET_STATE failed:</span>
+<span class="n">transaction</span> <span class="n">ID</span><span class="p">:</span> <span class="n">b04adebbf165ddc90b4ab897171e1daa7d360079ac18e65fa15d84ddfebfae90</span><span class="p">:</span>
+<span class="n">Private</span> <span class="n">data</span> <span class="n">matching</span> <span class="n">public</span> <span class="nb">hash</span> <span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span><span class="o">.</span> <span class="n">Public</span> <span class="nb">hash</span>
+<span class="n">version</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">version</span><span class="o">.</span><span class="n">Height</span><span class="p">{</span><span class="n">BlockNum</span><span class="p">:</span><span class="mh">0x6</span><span class="p">,</span> <span class="n">TxNum</span><span class="p">:</span><span class="mh">0x0</span><span class="p">},</span> <span class="n">Private</span> <span class="n">data</span> <span class="n">version</span> <span class="o">=</span>
+<span class="p">(</span><span class="o">*</span><span class="n">version</span><span class="o">.</span><span class="n">Height</span><span class="p">)(</span><span class="n">nil</span><span class="p">)</span><span class="s2">&quot;}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Members of Org2 will only be able to see the public hash of the private data.</p>
+</div>
+</div>
+<div class="section" id="purge-private-data">
+<span id="pd-purge"></span><h2>Purge Private Data<a class="headerlink" href="#purge-private-data" title="Permalink to this headline">¶</a></h2>
+<p>For use cases where private data only needs to be on the ledger until it can be
+replicated into an off-chain database, it is possible to “purge” the data after
+a certain set number of blocks, leaving behind only hash of the data that serves
+as immutable evidence of the transaction.</p>
+<p>There may be private data including personal or confidential
+information, such as the pricing data in our example, that the transacting
+parties don’t want disclosed to other organizations on the channel. Thus, it
+has a limited lifespan, and can be purged after existing unchanged on the
+blockchain for a designated number of blocks using the <code class="docutils literal notranslate"><span class="pre">blockToLive</span></code> property
+in the collection definition.</p>
+<p>Our <code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code> definition has a <code class="docutils literal notranslate"><span class="pre">blockToLive</span></code>
+property value of three meaning this data will live on the side database for
+three blocks and then after that it will get purged. Tying all of the pieces
+together, recall this collection definition  <code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code>
+is associated with the <code class="docutils literal notranslate"><span class="pre">price</span></code> private data in the  <code class="docutils literal notranslate"><span class="pre">initMarble()</span></code> function
+when it calls the <code class="docutils literal notranslate"><span class="pre">PutPrivateData()</span></code> API and passes the
+<code class="docutils literal notranslate"><span class="pre">collectionMarblePrivateDetails</span></code> as an argument.</p>
+<p>We will step through adding blocks to the chain, and then watch the price
+information get purged by issuing four new transactions (Create a new marble,
+followed by three marble transfers) which adds four new blocks to the chain.
+After the fourth transaction (third marble transfer), we will verify that the
+price private data is purged.</p>
+<blockquote>
+<div><p><span class="guilabel">Try it yourself</span></p>
+<p>Switch back to peer0 in Org1 using the following commands. Copy and paste the
+following code block and run it inside your peer container:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CORE_PEER_ADDRESS</span><span class="o">=</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">7051</span>
+<span class="n">export</span> <span class="n">CORE_PEER_LOCALMSPID</span><span class="o">=</span><span class="n">Org1MSP</span>
+<span class="n">export</span> <span class="n">CORE_PEER_TLS_ROOTCERT_FILE</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">peers</span><span class="o">/</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+<span class="n">export</span> <span class="n">CORE_PEER_MSPCONFIGPATH</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">Admin</span><span class="nd">@org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">msp</span>
+<span class="n">export</span> <span class="n">PEER0_ORG1_CA</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">/</span><span class="n">peer</span><span class="o">/</span><span class="n">crypto</span><span class="o">/</span><span class="n">peerOrganizations</span><span class="o">/</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">peers</span><span class="o">/</span><span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+<p>Open a new terminal window and view the private data logs for this peer by
+running the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">logs</span> <span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;private|pvt|privdata&#39;</span>
+</pre></div>
+</div>
+<p>You should see results similar to the following. Note the highest block number
+in the list. In the example below, the highest block height is <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">pvtdatastorage</span><span class="p">]</span> <span class="n">func1</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">023</span> <span class="n">Purger</span> <span class="n">started</span><span class="p">:</span> <span class="n">Purging</span> <span class="n">expired</span> <span class="n">private</span> <span class="n">data</span> <span class="n">till</span> <span class="n">block</span> <span class="n">number</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="n">pvtdatastorage</span><span class="p">]</span> <span class="n">func1</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">024</span> <span class="n">Purger</span> <span class="n">finished</span>
+<span class="p">[</span><span class="n">kvledger</span><span class="p">]</span> <span class="n">CommitWithPvtData</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">022</span> <span class="n">Channel</span> <span class="p">[</span><span class="n">mychannel</span><span class="p">]:</span> <span class="n">Committed</span> <span class="n">block</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">transaction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">[</span><span class="n">kvledger</span><span class="p">]</span> <span class="n">CommitWithPvtData</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">02</span><span class="n">e</span> <span class="n">Channel</span> <span class="p">[</span><span class="n">mychannel</span><span class="p">]:</span> <span class="n">Committed</span> <span class="n">block</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">transaction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">[</span><span class="n">kvledger</span><span class="p">]</span> <span class="n">CommitWithPvtData</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">030</span> <span class="n">Channel</span> <span class="p">[</span><span class="n">mychannel</span><span class="p">]:</span> <span class="n">Committed</span> <span class="n">block</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">transaction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">[</span><span class="n">kvledger</span><span class="p">]</span> <span class="n">CommitWithPvtData</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">036</span> <span class="n">Channel</span> <span class="p">[</span><span class="n">mychannel</span><span class="p">]:</span> <span class="n">Committed</span> <span class="n">block</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">transaction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">[</span><span class="n">kvledger</span><span class="p">]</span> <span class="n">CommitWithPvtData</span> <span class="o">-&gt;</span> <span class="n">INFO</span> <span class="mi">03</span><span class="n">e</span> <span class="n">Channel</span> <span class="p">[</span><span class="n">mychannel</span><span class="p">]:</span> <span class="n">Committed</span> <span class="n">block</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">transaction</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Back in the peer container, query for the <strong>marble1</strong> price data by running the
+following command. (A Query does not create a new transaction on the ledger
+since no data is transacted).</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should see results similar to:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marblePrivateDetails&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">99</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">price</span></code> data is still in the private data ledger.</p>
+<p>Create a new <strong>marble2</strong> by issuing the following command. This transaction
+creates a new block on the chain.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export MARBLE=$(echo -n &quot;{\&quot;name\&quot;:\&quot;marble2\&quot;,\&quot;color\&quot;:\&quot;blue\&quot;,\&quot;size\&quot;:35,\&quot;owner\&quot;:\&quot;tom\&quot;,\&quot;price\&quot;:99}&quot; | base64 | tr -d \\n)
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n marblesp -c &#39;{&quot;Args&quot;:[&quot;initMarble&quot;]}&#39; --transient &quot;{\&quot;marble\&quot;:\&quot;$MARBLE\&quot;}&quot;
+</pre></div>
+</div>
+<p>Switch back to the Terminal window and view the private data logs for this peer
+again. You should see the block height increase by 1.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">logs</span> <span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;private|pvt|privdata&#39;</span>
+</pre></div>
+</div>
+<p>Back in the peer container, query for the <strong>marble1</strong> price data again by
+running the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>The private data has not been purged, therefore the results are unchanged from
+previous query:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marblePrivateDetails&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">99</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Transfer marble2 to “joe” by running the following command. This transaction
+will add a second new block on the chain.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export MARBLE_OWNER=$(echo -n &quot;{\&quot;name\&quot;:\&quot;marble2\&quot;,\&quot;owner\&quot;:\&quot;joe\&quot;}&quot; | base64 | tr -d \\n)
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n marblesp -c &#39;{&quot;Args&quot;:[&quot;transferMarble&quot;]}&#39; --transient &quot;{\&quot;marble_owner\&quot;:\&quot;$MARBLE_OWNER\&quot;}&quot;
+</pre></div>
+</div>
+<p>Switch back to the Terminal window and view the private data logs for this peer
+again. You should see the block height increase by 1.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">logs</span> <span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;private|pvt|privdata&#39;</span>
+</pre></div>
+</div>
+<p>Back in the peer container, query for the marble1 price data by running
+the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should still be able to see the price private data.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marblePrivateDetails&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">99</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Transfer marble2 to “tom” by running the following command. This transaction
+will create a third new block on the chain.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export MARBLE_OWNER=$(echo -n &quot;{\&quot;name\&quot;:\&quot;marble2\&quot;,\&quot;owner\&quot;:\&quot;tom\&quot;}&quot; | base64 | tr -d \\n)
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n marblesp -c &#39;{&quot;Args&quot;:[&quot;transferMarble&quot;]}&#39; --transient &quot;{\&quot;marble_owner\&quot;:\&quot;$MARBLE_OWNER\&quot;}&quot;
+</pre></div>
+</div>
+<p>Switch back to the Terminal window and view the private data logs for this peer
+again. You should see the block height increase by 1.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">logs</span> <span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;private|pvt|privdata&#39;</span>
+</pre></div>
+</div>
+<p>Back in the peer container, query for the marble1 price data by running
+the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>You should still be able to see the price data.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;docType&quot;</span><span class="p">:</span><span class="s2">&quot;marblePrivateDetails&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;marble1&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">99</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, transfer marble2 to “jerry” by running the following command. This
+transaction will create a fourth new block on the chain. The <code class="docutils literal notranslate"><span class="pre">price</span></code> private
+data should be purged after this transaction.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>export MARBLE_OWNER=$(echo -n &quot;{\&quot;name\&quot;:\&quot;marble2\&quot;,\&quot;owner\&quot;:\&quot;jerry\&quot;}&quot; | base64 | tr -d \\n)
+peer chaincode invoke -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n marblesp -c &#39;{&quot;Args&quot;:[&quot;transferMarble&quot;]}&#39; --transient &quot;{\&quot;marble_owner\&quot;:\&quot;$MARBLE_OWNER\&quot;}&quot;
+</pre></div>
+</div>
+<p>Switch back to the Terminal window and view the private data logs for this peer
+again. You should see the block height increase by 1.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">logs</span> <span class="n">peer0</span><span class="o">.</span><span class="n">org1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">E</span> <span class="s1">&#39;private|pvt|privdata&#39;</span>
+</pre></div>
+</div>
+<p>Back in the peer container, query for the marble1 price data by running the following command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">query</span> <span class="o">-</span><span class="n">C</span> <span class="n">mychannel</span> <span class="o">-</span><span class="n">n</span> <span class="n">marblesp</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;{&quot;Args&quot;:[&quot;readMarblePrivateDetails&quot;,&quot;marble1&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>Because the price data has been purged, you should no longer be able to see
+it. You should see something similar to:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span><span class="p">:</span> <span class="n">endorsement</span> <span class="n">failure</span> <span class="n">during</span> <span class="n">query</span><span class="o">.</span> <span class="n">response</span><span class="p">:</span> <span class="n">status</span><span class="p">:</span><span class="mi">500</span>
+<span class="n">message</span><span class="p">:</span><span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">Error</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">Marble private details does not exist: marble1</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="using-indexes-with-private-data">
+<span id="pd-indexes"></span><h2>Using indexes with private data<a class="headerlink" href="#using-indexes-with-private-data" title="Permalink to this headline">¶</a></h2>
+<p>Indexes can also be applied to private data collections, by packaging indexes in
+the <code class="docutils literal notranslate"><span class="pre">META-INF/statedb/couchdb/collections/&lt;collection_name&gt;/indexes</span></code> directory
+alongside the chaincode. An example index is available <a class="reference external" href="https://github.com/hyperledger/fabric-samples/blob/master/chaincode/marbles02_private/go/META-INF/statedb/couchdb/collections/collectionMarbles/indexes/indexOwner.json">here</a> .</p>
+<p>For deployment of chaincode to production environments, it is recommended
+to define any indexes alongside chaincode so that the chaincode and supporting
+indexes are deployed automatically as a unit, once the chaincode has been
+installed on a peer and instantiated on a channel. The associated indexes are
+automatically deployed upon chaincode instantiation on the channel when
+the  <code class="docutils literal notranslate"><span class="pre">--collections-config</span></code> flag is specified pointing to the location of
+the collection JSON file.</p>
+</div>
+<div class="section" id="additional-resources">
+<span id="pd-ref-material"></span><h2>Additional resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">¶</a></h2>
+<p>For additional private data education, a video tutorial has been created.</p>
+<br/><br/>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qyjDi93URJE" frameborder="0" allowfullscreen></iframe>
+<br/><br/></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="chaincode.html" class="btn btn-neutral float-right" title="Chaincode Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="upgrading_your_network_tutorial.html" class="btn btn-neutral" title="Upgrading Your Network Components" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Hyperledger 2019.
+    <br>
+      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

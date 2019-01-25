@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Submitting a Change to Gerrit &mdash; hyperledger-fabricdocs master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reviewing a Change" href="reviewing.html" />
+    <link rel="prev" title="Working with Gerrit" href="gerrit.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="../index.html" class="icon icon-home"> hyperledger-fabricdocs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="Hyperledger Fabric" src=../_images/hyperledger_fabric_logo_color.png />
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="../_static/images/github_button.png"/></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="StackOverflow" src="../_static/images/stackoverflow_button.png"/></a>
+&nbsp;<a href="https://chat.hyperledger.org"><img style="padding: 0px; margin: auto auto auto auto;" alt="Rocket Chat" src="../_static/images/rocketchat_button.png"/></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="Youtube Channel" src="../_static/images/youtube_button.png"/></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatis.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew.html">What’s new in v1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew.html#release-notes">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developapps/developing_applications.html">Developing Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ops_guide.html">Operations Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Commands Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fabric-FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../CONTRIBUTING.html">Contributions Welcome!</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../CONTRIBUTING.html#ways-to-contribute">Ways to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CONTRIBUTING.html#getting-a-linux-foundation-account">Getting a Linux Foundation account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CONTRIBUTING.html#project-governance">Project Governance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CONTRIBUTING.html#contribution-guide">Contribution guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CONTRIBUTING.html#legal-stuff">Legal stuff</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../CONTRIBUTING.html#related-topics">Related Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../MAINTAINERS.html">Maintainers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jira_navigation.html">Using Jira to understand current work items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dev-setup/devenv.html">Setting up the development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dev-setup/build.html">Building Hyperledger Fabric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dev-setup/build.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf-account.html">Requesting a Linux Foundation Account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit.html">Working with Gerrit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit.html#reviewing-using-gerrit">Reviewing Using Gerrit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gerrit.html#viewing-pending-changes">Viewing Pending Changes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Submitting a Change to Gerrit</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#change-requirements">Change Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#check-that-your-change-request-is-validated-by-the-ci-process">Check that your change request is validated by the CI process</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reviewing.html">Reviewing a Change</a></li>
+<li class="toctree-l3"><a class="reference internal" href="best-practices.html">Gerrit Recommended Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Style-guides/go-style.html">Coding guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Style-guides/go-style.html#generating-grpc-code">Generating gRPC code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Style-guides/go-style.html#adding-or-updating-go-packages">Adding or updating Go packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../questions.html">Still Have Questions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Status</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hyperledger-fabricdocs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../CONTRIBUTING.html">Contributions Welcome!</a> &raquo;</li>
+        
+      <li>Submitting a Change to Gerrit</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/Gerrit/changes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="submitting-a-change-to-gerrit">
+<h1>Submitting a Change to Gerrit<a class="headerlink" href="#submitting-a-change-to-gerrit" title="Permalink to this headline">¶</a></h1>
+<p>Carefully review the following before submitting a change to the
+Hyperledger Fabric code base. These guidelines apply to developers that
+are new to open source, as well as to experienced open source developers.</p>
+<div class="section" id="change-requirements">
+<h2>Change Requirements<a class="headerlink" href="#change-requirements" title="Permalink to this headline">¶</a></h2>
+<p>This section contains guidelines for submitting code changes for review.
+For more information on how to submit a change using Gerrit, please see
+<a class="reference internal" href="gerrit.html"><span class="doc">Working with Gerrit</span></a>.</p>
+<p>All changes to Hyperledger Fabric are submitted as Git commits via Gerrit.
+Each commit must contain:</p>
+<ul class="simple">
+<li>a short and descriptive subject line that is 55 characters or fewer,
+followed by a blank line,</li>
+<li>a change description with the logic or reasoning for your changes,
+followed by a blank line,</li>
+<li>a Signed-off-by line, followed by a colon (Signed-off-by:), and</li>
+<li>a Change-Id identifier line, followed by a colon (Change-Id:). Gerrit
+won’t accept patches without this identifier.</li>
+</ul>
+<p>A commit with the above details is considered well-formed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You don’t need to supply the Change-Id identifier for a new
+commit; this is added automatically by the <code class="docutils literal notranslate"><span class="pre">commit-msg</span></code>
+Git hook associated with the repository.
+If you subsequently amend your commit and resubmit it,
+using the same Change-Id value as the initial commit will
+guarantee that Gerrit will recognize that subsequent commit
+as an amended commit with respect to the earlier one.</p>
+</div>
+<p>All changes and topics sent to Gerrit must be well-formed.
+In addition to the above mandatory content in a commit, a commit message
+should include:</p>
+<ul class="simple">
+<li><strong>what</strong> the change does,</li>
+<li><strong>why</strong> you chose that approach, and</li>
+<li><strong>how</strong> you know it works — for example, which tests you ran.</li>
+</ul>
+<p>Commits must <a class="reference internal" href="../dev-setup/build.html"><span class="doc">build cleanly</span></a> when applied on
+top of each other, thus avoiding breaking bisectability. Each commit
+should address a single identifiable JIRA issue and should be logically
+self-contained. For example, one commit might fix whitespace issues,
+another commit might rename a function, while a third commit could
+change some code’s functionality.</p>
+<p>A well-formed commit is illustrated below in detail:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">FAB</span><span class="o">-</span><span class="n">XXXX</span><span class="p">]</span> <span class="n">purpose</span> <span class="n">of</span> <span class="n">commit</span><span class="p">,</span> <span class="n">no</span> <span class="n">more</span> <span class="n">than</span> <span class="mi">55</span> <span class="n">characters</span>
+
+<span class="n">You</span> <span class="n">can</span> <span class="n">add</span> <span class="n">more</span> <span class="n">details</span> <span class="n">here</span> <span class="ow">in</span> <span class="n">several</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="n">but</span> <span class="n">please</span> <span class="n">keep</span>
+<span class="n">each</span> <span class="n">line</span> <span class="n">less</span> <span class="n">than</span> <span class="mi">80</span> <span class="n">characters</span> <span class="n">long</span><span class="o">.</span>
+
+<span class="n">Change</span><span class="o">-</span><span class="n">Id</span><span class="p">:</span> <span class="n">IF7b6ac513b2eca5f2bab9728ebd8b7e504d3cebe1</span>
+<span class="n">Signed</span><span class="o">-</span><span class="n">off</span><span class="o">-</span><span class="n">by</span><span class="p">:</span> <span class="n">Your</span> <span class="n">Name</span> <span class="o">&lt;</span><span class="n">commit</span><span class="o">-</span><span class="n">sender</span><span class="nd">@email</span><span class="o">.</span><span class="n">address</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The name in the <code class="docutils literal notranslate"><span class="pre">Signed-off-by:</span></code> line and your email must match the change
+authorship information. Make sure your personal <code class="docutils literal notranslate"><span class="pre">.gitconfig</span></code> file is set up
+correctly.</p>
+<p>When a change is included in the set to enable other changes, but it
+will not be part of the final set, please let the reviewers know this.</p>
+</div>
+<div class="section" id="check-that-your-change-request-is-validated-by-the-ci-process">
+<h2>Check that your change request is validated by the CI process<a class="headerlink" href="#check-that-your-change-request-is-validated-by-the-ci-process" title="Permalink to this headline">¶</a></h2>
+<p>To ensure stability of the code and limit possible regressions, we use
+a Continuous Integration (CI) process based on Jenkins which triggers
+a build on several platforms and runs tests against every change
+request being submitted. It is your responsibility to check that your
+CR passes these tests. No CR will ever be merged if it fails the
+tests and you shouldn’t expect anybody to pay attention to your CRs
+until they pass the CI tests.</p>
+<p>To check on the status of the CI process, simply look at your CR on
+Gerrit, following the URL that was given to you as the result of the
+push in the previous step. The History section at the bottom of the
+page will display a set of actions taken by “Hyperledger Jobbuilder”
+corresponding to the CI process being executed.</p>
+<p>Upon completion, “Hyperledger Jobbuilder” will add to the CR a <em>+1
+vote</em> if successful and a <em>-1 vote</em> otherwise.</p>
+<p>In case of failure, explore the logs linked from the CR History. If
+you spot a problem with your CR, amend your commit and push it to
+update it, which will automatically kick off the CI process again.</p>
+<p>If you see nothing wrong with your CR, it might be that the CI process
+simply failed for some reason unrelated to your change. In that case
+you may want to restart the CI process by posting a reply to your CR
+with the simple content “reverify”. Check the <a class="reference external" href="https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst">CI management page</a>
+for additional information and options on this.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reviewing.html" class="btn btn-neutral float-right" title="Reviewing a Change" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gerrit.html" class="btn btn-neutral" title="Working with Gerrit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Hyperledger 2019.
+    <br>
+      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

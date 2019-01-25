@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Endorsement policies &mdash; hyperledger-fabricdocs master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pluggable transaction endorsement and validation" href="pluggable_endorsement_and_validation.html" />
+    <link rel="prev" title="Channel Configuration (configtx)" href="configtx.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="index.html" class="icon icon-home"> hyperledger-fabricdocs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="Hyperledger Fabric" src=_images/hyperledger_fabric_logo_color.png />
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="_static/images/github_button.png"/></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="StackOverflow" src="_static/images/stackoverflow_button.png"/></a>
+&nbsp;<a href="https://chat.hyperledger.org"><img style="padding: 0px; margin: auto auto auto auto;" alt="Rocket Chat" src="_static/images/rocketchat_button.png"/></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="Youtube Channel" src="_static/images/youtube_button.png"/></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="whatis.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html">What’s new in v1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html#release-notes">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developapps/developing_applications.html">Developing Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="ops_guide.html">Operations Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="upgrade_to_newest_version.html">Upgrading to the Newest Version of Fabric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_update.html">Updating a Channel Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msp.html">Membership Service Providers (MSP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configtx.html">Channel Configuration (configtx)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Endorsement policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#two-ways-to-require-endorsement">Two ways to require endorsement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-chaincode-level-endorsement-policies">Setting chaincode-level endorsement policies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#endorsement-policy-syntax">Endorsement policy syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-key-level-endorsement-policies">Setting key-level endorsement policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pluggable_endorsement_and_validation.html">Pluggable transaction endorsement and validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access_control.html">Access Control Lists (ACL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idemix.html">MSP Implementation with Identity Mixer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="idemixgen.html">Identity Mixer MSP configuration generator (idemixgen)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations_service.html">The Operations Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics_reference.html">Metrics Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error-handling.html">Error handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging-control.html">Logging Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enable_tls.html">Securing Communication With Transport Layer Security (TLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kafka.html">Bringing up a Kafka-based Ordering Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command_ref.html">Commands Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fabric-FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributions Welcome!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="questions.html">Still Have Questions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="status.html">Status</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hyperledger-fabricdocs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="ops_guide.html">Operations Guides</a> &raquo;</li>
+        
+      <li>Endorsement policies</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/endorsement-policies.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="endorsement-policies">
+<h1>Endorsement policies<a class="headerlink" href="#endorsement-policies" title="Permalink to this headline">¶</a></h1>
+<p>Every chaincode has an endorsement policy which specifies the set of peers on
+a channel that must execute chaincode and endorse the execution results in
+order for the transaction to be considered valid. These endorsement policies
+define the organizations (through their peers) who must “endorse” (i.e., approve
+of) the execution of a proposal.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Recall that <strong>state</strong>, represented by key-value pairs, is separate
+from blockchain data. For more on this, check out our <a class="reference internal" href="ledger/ledger.html"><span class="doc">Ledger</span></a>
+documentation.</p>
+</div>
+<p>As part of the transaction validation step performed by the peers, each validating
+peer checks to make sure that the transaction contains the appropriate <strong>number</strong>
+of endorsements and that they are from the expected sources (both of these are
+specified in the endorsement policy). The endorsements are also checked to make
+sure they’re valid (i.e., that they are valid signatures from valid certificates).</p>
+<div class="section" id="two-ways-to-require-endorsement">
+<h2>Two ways to require endorsement<a class="headerlink" href="#two-ways-to-require-endorsement" title="Permalink to this headline">¶</a></h2>
+<p>By default, endorsement policies are specified for a channel’s chaincode at
+instantiation or upgrade time (that is, one endorsement policy covers all of the
+state associated with a chaincode).</p>
+<p>However, there are cases where it may be necessary for a particular state (a
+particular key-value pair, in other words) to have a different endorsement policy.
+This <strong>state-based endorsement</strong> allows the default chaincode-level endorsement
+policies to be overridden by a different policy for the specified keys.</p>
+<p>To illustrate the circumstances in which these two types of endorsement policies
+might be used, consider a channel on which cars are being exchanged. The “creation”
+— also known as “issuance” – of a car as an asset that can be traded (putting
+the key-value pair that represents it into the world state, in other words) would
+have to satisfy the chaincode-level endorsement policy. To see how to set a
+chaincode-level endorsement policy, check out the section below.</p>
+<p>If the car requires a specific endorsement policy, it can be defined either when
+the car is created or afterwards. There are a number of reasons why it might
+be necessary or preferable to set a state-specific endorsement policy. The car
+might have historical importance or value that makes it necessary to have the
+endorsement of a licensed appraiser. Also, the owner of the car (if they’re a
+member of the channel) might also want to ensure that their peer signs off on a
+transaction. In both cases, <strong>an endorsement policy is required for a particular
+asset that is different from the default endorsement policies for the other
+assets associated with that chaincode.</strong></p>
+<p>We’ll show you how to define a state-based endorsement policy in a subsequent
+section. But first, let’s see how we set a chaincode-level endorsement policy.</p>
+</div>
+<div class="section" id="setting-chaincode-level-endorsement-policies">
+<h2>Setting chaincode-level endorsement policies<a class="headerlink" href="#setting-chaincode-level-endorsement-policies" title="Permalink to this headline">¶</a></h2>
+<p>Chaincode-level endorsement policies can be specified at instantiate time using
+either the SDK (for some sample code on how to do this, click
+<a class="reference external" href="https://github.com/hyperledger/fabric-sdk-node/blob/f8ffa90dc1b61a4a60a6fa25de760c647587b788/test/integration/e2e/e2eUtils.js#L178">here</a>)
+or in the peer CLI using the <code class="docutils literal notranslate"><span class="pre">-P</span></code> switch followed by the policy.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Don’t worry about the policy syntax (<code class="docutils literal notranslate"><span class="pre">'Org1.member'</span></code>, et all) right
+now. We’ll talk more about the syntax in the next section.</p>
+</div>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">instantiate</span> <span class="o">-</span><span class="n">C</span> <span class="o">&lt;</span><span class="n">channelid</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">P</span> <span class="s2">&quot;AND(&#39;Org1.member&#39;, &#39;Org2.member&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>This command deploys chaincode <code class="docutils literal notranslate"><span class="pre">mycc</span></code> (“my chaincode”) with the policy
+<code class="docutils literal notranslate"><span class="pre">AND('Org1.member',</span> <span class="pre">'Org2.member')</span></code> which would require that a member of both
+Org1 and Org2 sign the transaction.</p>
+<p>Notice that, if the identity classification is enabled (see <a class="reference internal" href="msp.html"><span class="doc">Membership Service Providers (MSP)</span></a>),
+one can use the <code class="docutils literal notranslate"><span class="pre">PEER</span></code> role to restrict endorsement to only peers.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">peer</span> <span class="n">chaincode</span> <span class="n">instantiate</span> <span class="o">-</span><span class="n">C</span> <span class="o">&lt;</span><span class="n">channelid</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">P</span> <span class="s2">&quot;AND(&#39;Org1.peer&#39;, &#39;Org2.peer&#39;)&quot;</span>
+</pre></div>
+</div>
+<p>A new organization added to the channel after instantiation can query a chaincode
+(provided the query has appropriate authorization as defined by channel policies
+and any application level checks enforced by the chaincode) but will not be able
+to execute or endorse the chaincode. The endorsement policy needs to be modified
+to allow transactions to be committed with endorsements from the new organization.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if not specified at instantiation time, the endorsement policy
+defaults to “any member of the organizations in the channel”.
+For example, a channel with “Org1” and “Org2” would have a default
+endorsement policy of “OR(‘Org1.member’, ‘Org2.member’)”.</p>
+</div>
+<div class="section" id="endorsement-policy-syntax">
+<h3>Endorsement policy syntax<a class="headerlink" href="#endorsement-policy-syntax" title="Permalink to this headline">¶</a></h3>
+<p>As you can see above, policies are expressed in terms of principals
+(“principals” are identities matched to a role). Principals are described as
+<code class="docutils literal notranslate"><span class="pre">'MSP.ROLE'</span></code>, where <code class="docutils literal notranslate"><span class="pre">MSP</span></code> represents the required MSP ID and <code class="docutils literal notranslate"><span class="pre">ROLE</span></code>
+represents one of the four accepted roles: <code class="docutils literal notranslate"><span class="pre">member</span></code>, <code class="docutils literal notranslate"><span class="pre">admin</span></code>, <code class="docutils literal notranslate"><span class="pre">client</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">peer</span></code>.</p>
+<p>Here are a few examples of valid principals:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'Org0.admin'</span></code>: any administrator of the <code class="docutils literal notranslate"><span class="pre">Org0</span></code> MSP</li>
+<li><code class="docutils literal notranslate"><span class="pre">'Org1.member'</span></code>: any member of the <code class="docutils literal notranslate"><span class="pre">Org1</span></code> MSP</li>
+<li><code class="docutils literal notranslate"><span class="pre">'Org1.client'</span></code>: any client of the <code class="docutils literal notranslate"><span class="pre">Org1</span></code> MSP</li>
+<li><code class="docutils literal notranslate"><span class="pre">'Org1.peer'</span></code>: any peer of the <code class="docutils literal notranslate"><span class="pre">Org1</span></code> MSP</li>
+</ul>
+</div></blockquote>
+<p>The syntax of the language is:</p>
+<p><code class="docutils literal notranslate"><span class="pre">EXPR(E[,</span> <span class="pre">E...])</span></code></p>
+<p>Where <code class="docutils literal notranslate"><span class="pre">EXPR</span></code> is either <code class="docutils literal notranslate"><span class="pre">AND</span></code>, <code class="docutils literal notranslate"><span class="pre">OR</span></code>, or <code class="docutils literal notranslate"><span class="pre">OutOf</span></code>, and <code class="docutils literal notranslate"><span class="pre">E</span></code> is either a
+principal (with the syntax described above) or another nested call to <code class="docutils literal notranslate"><span class="pre">EXPR</span></code>.</p>
+<dl class="docutils">
+<dt>For example:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">AND('Org1.member',</span> <span class="pre">'Org2.member',</span> <span class="pre">'Org3.member')</span></code> requests one signature
+from each of the three principals.</li>
+<li><code class="docutils literal notranslate"><span class="pre">OR('Org1.member',</span> <span class="pre">'Org2.member')</span></code> requests one signature from either one
+of the two principals.</li>
+<li><code class="docutils literal notranslate"><span class="pre">OR('Org1.member',</span> <span class="pre">AND('Org2.member',</span> <span class="pre">'Org3.member'))</span></code> requests either one
+signature from a member of the <code class="docutils literal notranslate"><span class="pre">Org1</span></code> MSP or one signature from a member
+of the <code class="docutils literal notranslate"><span class="pre">Org2</span></code> MSP and one signature from a member of the <code class="docutils literal notranslate"><span class="pre">Org3</span></code> MSP.</li>
+<li><code class="docutils literal notranslate"><span class="pre">OutOf(1,</span> <span class="pre">'Org1.member',</span> <span class="pre">'Org2.member')</span></code>, which resolves to the same thing
+as <code class="docutils literal notranslate"><span class="pre">OR('Org1.member',</span> <span class="pre">'Org2.member')</span></code>.</li>
+<li>Similarly, <code class="docutils literal notranslate"><span class="pre">OutOf(2,</span> <span class="pre">'Org1.member',</span> <span class="pre">'Org2.member')</span></code> is equivalent to
+<code class="docutils literal notranslate"><span class="pre">AND('Org1.member',</span> <span class="pre">'Org2.member')</span></code>, and <code class="docutils literal notranslate"><span class="pre">OutOf(2,</span> <span class="pre">'Org1.member',</span>
+<span class="pre">'Org2.member',</span> <span class="pre">'Org3.member')</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">OR(AND('Org1.member',</span>
+<span class="pre">'Org2.member'),</span> <span class="pre">AND('Org1.member',</span> <span class="pre">'Org3.member'),</span> <span class="pre">AND('Org2.member',</span>
+<span class="pre">'Org3.member'))</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="setting-key-level-endorsement-policies">
+<span id="key-level-endorsement"></span><h2>Setting key-level endorsement policies<a class="headerlink" href="#setting-key-level-endorsement-policies" title="Permalink to this headline">¶</a></h2>
+<p>Setting regular chaincode-level endorsement policies is tied to the lifecycle of
+the corresponding chaincode. They can only be set or modified when instantiating
+or upgrading the corresponding chaincode on a channel.</p>
+<p>In contrast, key-level endorsement policies can be set and modified in a more
+granular fashion from within a chaincode. The modification is part of the
+read-write set of a regular transaction.</p>
+<p>The shim API provides the following functions to set and retrieve an endorsement
+policy for/from a regular key.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">ep</span></code> below stands for the “endorsement policy”, which can be expressed
+either by using the same syntax described above or by using the
+convenience function described below. Either method will generate a
+binary version of the endorsement policy that can be consumed by the
+basic shim API.</p>
+</div>
+<div class="highlight-Go notranslate"><div class="highlight"><pre><span></span><span class="nx">SetStateValidationParameter</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">ep</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">error</span>
+<span class="nx">GetStateValidationParameter</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For keys that are part of <a class="reference internal" href="private-data/private-data.html"><span class="doc">Private data</span></a> in a collection the
+following functions apply:</p>
+<div class="highlight-Go notranslate"><div class="highlight"><pre><span></span><span class="nx">SetPrivateDataValidationParameter</span><span class="p">(</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">ep</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">error</span>
+<span class="nx">GetPrivateDataValidationParameter</span><span class="p">(</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To help set endorsement policies and marshal them into validation
+parameter byte arrays, the Go shim provides an extension with convenience
+functions that allow the chaincode developer to deal with endorsement policies
+in terms of the MSP identifiers of organizations, see <a class="reference external" href="https://godoc.org/github.com/hyperledger/fabric/core/chaincode/shim/ext/statebased#KeyEndorsementPolicy">KeyEndorsementPolicy</a>:</p>
+<div class="highlight-Go notranslate"><div class="highlight"><pre><span></span><span class="kd">type</span> <span class="nx">KeyEndorsementPolicy</span> <span class="kd">interface</span> <span class="p">{</span>
+    <span class="c1">// Policy returns the endorsement policy as bytes</span>
+    <span class="nx">Policy</span><span class="p">()</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+
+    <span class="c1">// AddOrgs adds the specified orgs to the list of orgs that are required</span>
+    <span class="c1">// to endorse</span>
+    <span class="nx">AddOrgs</span><span class="p">(</span><span class="nx">roleType</span> <span class="nx">RoleType</span><span class="p">,</span> <span class="nx">organizations</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span>
+
+    <span class="c1">// DelOrgs delete the specified channel orgs from the existing key-level endorsement</span>
+    <span class="c1">// policy for this KVS key. If any org is not present, an error will be returned.</span>
+    <span class="nx">DelOrgs</span><span class="p">(</span><span class="nx">organizations</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span>
+
+    <span class="c1">// ListOrgs returns an array of channel orgs that are required to endorse changes</span>
+    <span class="nx">ListOrgs</span><span class="p">()</span> <span class="p">([]</span><span class="kt">string</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For example, to set an endorsement policy for a key where two specific orgs are
+required to endorse the key change, pass both org <code class="docutils literal notranslate"><span class="pre">MSPIDs</span></code> to <code class="docutils literal notranslate"><span class="pre">AddOrgs()</span></code>,
+and then call <code class="docutils literal notranslate"><span class="pre">Policy()</span></code> to construct the endorsement policy byte array that
+can be passed to <code class="docutils literal notranslate"><span class="pre">SetStateValidationParameter()</span></code>.</p>
+<p>To add the shim extension to your chaincode as a dependency, see <a class="reference internal" href="chaincode4ade.html#vendoring"><span class="std std-ref">Managing external dependencies for chaincode written in Go</span></a>.</p>
+</div>
+<div class="section" id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>At commit time, setting a value of a key is no different from setting the
+endorsement policy of a key — both update the state of the key and are
+validated based on the same rules.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="38%" />
+<col width="34%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Validation</th>
+<th class="head">no validation parameter set</th>
+<th class="head">validation parameter set</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>modify value</td>
+<td>check chaincode ep</td>
+<td>check key-level ep</td>
+</tr>
+<tr class="row-odd"><td>modify key-level ep</td>
+<td>check chaincode ep</td>
+<td>check key-level ep</td>
+</tr>
+</tbody>
+</table>
+<p>As we discussed above, if a key is modified and no key-level endorsement policy
+is present, the chaincode-level endorsement policy applies by default. This is
+also true when a key-level endorsement policy is set for a key for the first time
+— the new key-level endorsement policy must first be endorsed according to the
+pre-existing chaincode-level endorsement policy.</p>
+<p>If a key is modified and a key-level endorsement policy is present, the key-level
+endorsement policy overrides the chaincode-level endorsement policy. In practice,
+this means that the key-level endorsement policy can be either less restrictive
+or more restrictive than the chaincode-level endorsement policy. Because the
+chaincode-level endorsement policy must be satisfied in order to set a key-level
+endorsement policy for the first time, no trust assumptions have been violated.</p>
+<p>If a key’s endorsement policy is removed (set to nil), the chaincode-level
+endorsement policy becomes the default again.</p>
+<p>If a transaction modifies multiple keys with different associated key-level
+endorsement policies, all of these policies need to be satisfied in order
+for the transaction to be valid.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pluggable_endorsement_and_validation.html" class="btn btn-neutral float-right" title="Pluggable transaction endorsement and validation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configtx.html" class="btn btn-neutral" title="Channel Configuration (configtx)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Hyperledger 2019.
+    <br>
+      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

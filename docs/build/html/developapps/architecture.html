@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Process and Data Design &mdash; hyperledger-fabricdocs master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Smart Contract Processing" href="smartcontract.html" />
+    <link rel="prev" title="Analysis" href="analysis.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="../index.html" class="icon icon-home"> hyperledger-fabricdocs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="Hyperledger Fabric" src=../_images/hyperledger_fabric_logo_color.png />
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="GitHub" src="../_static/images/github_button.png"/></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="StackOverflow" src="../_static/images/stackoverflow_button.png"/></a>
+&nbsp;<a href="https://chat.hyperledger.org"><img style="padding: 0px; margin: auto auto auto auto;" alt="Rocket Chat" src="../_static/images/rocketchat_button.png"/></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="Youtube Channel" src="../_static/images/youtube_button.png"/></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatis.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew.html">What’s new in v1.4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew.html#release-notes">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_concepts.html">Key Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="developing_applications.html">Developing Applications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="scenario.html">The scenario</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html">Analysis</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Process and Data Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lifecycle">Lifecycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ledger-state">Ledger state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state-keys">State keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-states">Multiple states</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logical-representation">Logical representation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#physical-representation">Physical representation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trust-relationships">Trust relationships</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="smartcontract.html">Smart Contract Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apis.html">APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designelements.html">Application design elements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ops_guide.html">Operations Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_ref.html">Commands Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fabric-FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributions Welcome!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releases.html">Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../questions.html">Still Have Questions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../status.html">Status</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hyperledger-fabricdocs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="developing_applications.html">Developing Applications</a> &raquo;</li>
+        
+      <li>Process and Data Design</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/developapps/architecture.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="process-and-data-design">
+<h1>Process and Data Design<a class="headerlink" href="#process-and-data-design" title="Permalink to this headline">¶</a></h1>
+<p><strong>Audience</strong>: Architects, Application and smart contract developers, Business
+professionals</p>
+<p>This topic shows you how to design the commercial paper processes and their
+related data structures in PaperNet. Our <a class="reference external" href="./analysis.html">analysis</a> highlighted
+that modelling PaperNet using states and transactions provided a precise way to
+understand what’s happening. We’re now going to elaborate on these two strongly
+related concepts to help us subsequently design the smart contracts and
+applications of PaperNet.</p>
+<div class="section" id="lifecycle">
+<h2>Lifecycle<a class="headerlink" href="#lifecycle" title="Permalink to this headline">¶</a></h2>
+<p>As we’ve seen, there are two important concepts that concern us when dealing
+with commercial paper; <strong>states</strong> and <strong>transactions</strong>. Indeed, this is true for
+<em>all</em> blockchain use cases; there are conceptual objects of value, modelled as
+states, whose lifecycle transitions are described by transactions. An effective
+analysis of states and transactions is an essential starting point for a
+successful implementation.</p>
+<p>We can represent the life cycle of a commercial paper using a state transition
+diagram:</p>
+<p><img alt="../_images/develop.diagram.4.png" src="../_images/develop.diagram.4.png" />develop.statetransition <em>The state transition
+diagram for commercial paper. Commercial papers transition between <strong>issued</strong>,
+<strong>trading</strong> and <strong>redeemed</strong> states by means of the <strong>issue</strong>, <strong>buy</strong> and
+<strong>redeem</strong> transactions.</em></p>
+<p>See how the state diagram describes how commercial papers change over time, and
+how specific transactions govern the life cycle transitions. In Hypledger
+Fabric, smart contracts implement transaction logic that transition commercial
+papers between their different states. Commercial paper states are actually held
+in the ledger world state; so let’s take a closer look at them.</p>
+</div>
+<div class="section" id="ledger-state">
+<h2>Ledger state<a class="headerlink" href="#ledger-state" title="Permalink to this headline">¶</a></h2>
+<p>Recall the structure of a commercial paper:</p>
+<p><img alt="../_images/develop.diagram.5.png" src="../_images/develop.diagram.5.png" />develop.paperstructure <em>A commercial paper can be
+represented as a set of properties, each with a value. Typically, some
+combination of these properties will provide a unique key for each paper.</em></p>
+<p>See how a commercial paper <code class="docutils literal notranslate"><span class="pre">Paper</span></code> property has value <code class="docutils literal notranslate"><span class="pre">00001</span></code>, and the <code class="docutils literal notranslate"><span class="pre">Face</span> <span class="pre">value</span></code> property has value <code class="docutils literal notranslate"><span class="pre">5M</span> <span class="pre">USD</span></code>. Most importantly, the <code class="docutils literal notranslate"><span class="pre">Current</span> <span class="pre">state</span></code>
+property indicates whether the commercial paper is <code class="docutils literal notranslate"><span class="pre">issued</span></code>,<code class="docutils literal notranslate"><span class="pre">trading</span></code> or
+<code class="docutils literal notranslate"><span class="pre">redeemed</span></code>. In combination, the full set of properties make up the <strong>state</strong> of
+a commercial paper. Moreover, the entire collection of these individual
+commercial paper states constitutes the ledger
+<a class="reference external" href="../ledger/ledger.html#world-state">world state</a>.</p>
+<p>All ledger state share this form; each has a set of properties, each with a
+different value. This <em>multi-property</em> aspect of states is a powerful feature –
+it allows us to think of a Fabric state as a vector rather than a simple scalar.
+We then represent facts about whole objects as individual states, which
+subsequently undergo transitions controlled by transaction logic. A Fabric state
+is implemented as a key/value pair, in which the value encodes the object
+properties in a format that captures the object’s multiple properties, typically
+JSON. The <a class="reference external" href="../ledger/ledger.html#ledger-world-state-database-options">ledger
+database</a> can support
+advanced query operations against these properties, which is very helpful for
+sophisticated object retrieval.</p>
+<p>See how MagnetoCorp’s paper <code class="docutils literal notranslate"><span class="pre">00001</span></code> is represented as a state vector that
+transitions according to different transaction stimuli:</p>
+<p><img alt="../_images/develop.diagram.6.png" src="../_images/develop.diagram.6.png" />develop.paperstates <em>A commercial paper state is
+brought into existence and transitions as a result of different transactions.
+Hyperledger Fabric states have multiple properties, making them vectors rather
+than scalars.</em></p>
+<p>Notice how each individual paper starts with the empty state, which is
+technically a <a class="reference external" href="https://en.wikipedia.org/wiki/Null_(SQL)"><code class="docutils literal notranslate"><span class="pre">nil</span></code></a> state for the
+paper, as it doesn’t exist! See how paper <code class="docutils literal notranslate"><span class="pre">00001</span></code> is brought into existence by
+the <strong>issue</strong> transaction, and how it is subsequently updated as a result of the
+<strong>buy</strong> and <strong>redeem</strong> transactions.</p>
+<p>Notice how each state is self-describing; each property has a name and a value.
+Although all our commercial papers currently have the same properties, this need
+not be the case for all time, as Hyperledger Fabric supports different states
+having different properties. This allows the same ledger world state to contain
+different forms of the same asset as well as different types of asset. It also
+makes it possible to update a state’s structure; imagine a new regulation that
+requires an additional data field. Flexible state properties support the
+fundamental requirement of data evolution over time.</p>
+</div>
+<div class="section" id="state-keys">
+<h2>State keys<a class="headerlink" href="#state-keys" title="Permalink to this headline">¶</a></h2>
+<p>In most practical applications, a state will have a combination of properties
+that uniquely identify it in a given context – it’s <strong>key</strong>. The key for a
+PaperNet commercial paper is formed by a concatenation of the <code class="docutils literal notranslate"><span class="pre">Issuer</span></code> and
+<code class="docutils literal notranslate"><span class="pre">paper</span></code> properties; so for MagnetoCorp’s first paper, it’s <code class="docutils literal notranslate"><span class="pre">MagnetoCorp00001</span></code>.</p>
+<p>A state key allows us to uniquely identify a paper; it is created as a result
+of the <strong>issue</strong> transaction and subsequently updated by <strong>buy</strong> and <strong>redeem</strong>.
+Hyperledger Fabric requires each state in a ledger to have a unique key.</p>
+<p>When a unique key is not available from the available set of properties, an
+application-determined unique key is specified as an input to the transaction
+that creates the state. This unique key is usually with some form of
+<a class="reference external" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a>, which
+although less readable, is a standard practice. What’s important is that every
+individual state object in a ledger must have a unique key.</p>
+</div>
+<div class="section" id="multiple-states">
+<h2>Multiple states<a class="headerlink" href="#multiple-states" title="Permalink to this headline">¶</a></h2>
+<p>As we’ve seen, commercial papers in PaperNet are stored as state vectors in a
+ledger. It’s a reasonable requirement to be able to query different commercial
+papers from the ledger; for example: find all the papers issued by MagnetoCorp,
+or: find all the papers issued by MagnetoCorp in the <code class="docutils literal notranslate"><span class="pre">redeemed</span></code> state.</p>
+<p>To make these kinds of search tasks possible, it’s helpful to group all related
+papers together in a logical list. The PaperNet design incorporates the idea of
+a commercial paper list – a logical container which is updated whenever
+commercial papers are issued or otherwise changed.</p>
+<div class="section" id="logical-representation">
+<h3>Logical representation<a class="headerlink" href="#logical-representation" title="Permalink to this headline">¶</a></h3>
+<p>It’s helpful to think of all PaperNet commercial papers being in a single list
+of commercial papers:</p>
+<p><img alt="../_images/develop.diagram.7.png" src="../_images/develop.diagram.7.png" />develop.paperlist <em>MagnetoCorp’s
+newly created commercial  paper 00004 is added to the list of existing
+commercial papers.</em></p>
+<p>New papers can be added to the list as a result of an <strong>issue</strong> transaction, and
+papers already in the list can be updated with <strong>buy</strong> or <strong>redeem</strong>
+transactions. See how the list has a descriptive name: <code class="docutils literal notranslate"><span class="pre">org.papernet.papers</span></code>;
+it’s a really good idea to use this kind of <a class="reference external" href="https://en.wikipedia.org/wiki/Domain_Name_System">DNS
+name</a> because well-chosen
+names will make your blockchain designs intuitive to other people. This idea
+applies equally well to smart contract <a class="reference external" href="./namespace.html">namespaces</a>.</p>
+</div>
+<div class="section" id="physical-representation">
+<h3>Physical representation<a class="headerlink" href="#physical-representation" title="Permalink to this headline">¶</a></h3>
+<p>While it’s correct to think of a single list of papers in PaperNet –
+<code class="docutils literal notranslate"><span class="pre">org.papernet.papers</span></code> – lists are best implemented as a set of individual
+Fabric states, whose composite key associates the state with its list. In this
+way, each state’s composite key is both unique and supports effective list query.</p>
+<p><img alt="../_images/develop.diagram.8.png" src="../_images/develop.diagram.8.png" />develop.paperphysical <em>Representing a list of
+PaperNet commercial papers as a set of distinct Hyperledger Fabric states</em></p>
+<p>Notice how each paper in the list is represented by a vector state, with a
+unique <strong>composite</strong> key formed by the concatenation of <code class="docutils literal notranslate"><span class="pre">org.papernet.paper</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Issuer</span></code> and <code class="docutils literal notranslate"><span class="pre">Paper</span></code> properties. This structure is helpful for two reasons:</p>
+<ul class="simple">
+<li>It allows us to examine any state vector in the ledger to determine which
+list it’s in, without reference to a separate list. It’s analogous to
+looking at set of sports fans, and identifying which team they support by
+the colour of the shirt they are wearing. The sports fans self-declare their
+allegiance; we don’t need a list of fans.</li>
+<li>Hyperlegder Fabric internally uses a concurrency control
+<a class="reference external" href="../arch-deep-dive.html#the-endorsing-peer-simulates-a-transaction-and-produces-an-endorsement-signature">mechanism</a>
+to update a ledger, such that keeping papers in separate state vectors vastly
+reduces the opportunity for shared-state collisions. Such collisions require
+transaction re-submission, complicate application design, and decrease
+performance.</li>
+</ul>
+<p>This second point is actually a key take-away for Hyperledger Fabric; the
+physical design of state vectors is <strong>very important</strong> to optimum performance
+and behaviour. Keep your states separate!</p>
+</div>
+</div>
+<div class="section" id="trust-relationships">
+<h2>Trust relationships<a class="headerlink" href="#trust-relationships" title="Permalink to this headline">¶</a></h2>
+<p>We have discussed how the different roles in a network, such as issuer, trader
+or rating agencies as well as different business interests determine who needs
+to sign off on a transaction. In Fabric, these rules are captured by so-called
+<a class="reference external" href="endorsementpolicies.html"><strong>endorsement policies</strong></a>. The rules can be set on
+a chaincode granularity, as well as for individual state keys.</p>
+<p>This means that in PaperNet, we can set one rule for the whole namespace that
+determines which organizations can issue new papers. Later, rules can be set
+and updated for individual papers to capture the trust relationships of buy
+and redeem transactions.</p>
+<p>In the next topic, we will show you how to combine these design concepts to
+implement the PaperNet commercial paper smart contract, and then an application
+in exploits it!</p>
+<!--- Licensed under Creative Commons Attribution 4.0 International License
+https://creativecommons.org/licenses/by/4.0/ --></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="smartcontract.html" class="btn btn-neutral float-right" title="Smart Contract Processing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="analysis.html" class="btn btn-neutral" title="Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright Hyperledger 2019.
+    <br>
+      <br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
