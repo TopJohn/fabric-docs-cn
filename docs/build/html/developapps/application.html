@@ -404,13 +404,13 @@ access this smart contract:</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">contract</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">network</span><span class="p">.</span><span class="nx">getContract</span><span class="p">(</span><span class="s1">&#39;papercontract&#39;</span><span class="p">,</span> <span class="s1">&#39;org.papernet.commercialpaper&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note how the application provides a name – <code class="docutils literal notranslate"><span class="pre">papercontract</span></code> – and the optional
-namespace of a contract: <code class="docutils literal notranslate"><span class="pre">org.papernet.commercialpaper</span></code>! We see how a
-<a class="reference external" href="./namespace.html">namespace</a> picks out a particular contract from a chaincode
-file such as <code class="docutils literal notranslate"><span class="pre">papercontract.js</span></code> that contains many contracts. In PaperNet,
-<code class="docutils literal notranslate"><span class="pre">papercontract.js</span></code> was installed and instantiated with the name <code class="docutils literal notranslate"><span class="pre">papercontract</span></code>,
-and if you’re interested, <a class="reference external" href="../chaincode4noah.html">read how</a> to install and
-instantiate a chaincode containing multiple smart contracts.</p>
+<p>Note how the application provides a name – <code class="docutils literal notranslate"><span class="pre">papercontract</span></code> – and an explicit
+contract name: <code class="docutils literal notranslate"><span class="pre">org.papernet.commercialpaper</span></code>! We see how a <a class="reference external" href="./contractname.html">contract
+name</a> picks out one contract from the <code class="docutils literal notranslate"><span class="pre">papercontract.js</span></code>
+chaincode file that contains many contracts. In PaperNet, <code class="docutils literal notranslate"><span class="pre">papercontract.js</span></code> was
+installed and instantiated with the name <code class="docutils literal notranslate"><span class="pre">papercontract</span></code>, and if you’re
+interested, read <a class="reference external" href="../chaincode4noah.html">how</a> to install and instantiate a
+chaincode containing multiple smart contracts.</p>
 <p>If our application simultaneously required access to another contract in
 PaperNet or BondNet this would be easy:</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">euroContract</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">network</span><span class="p">.</span><span class="nx">getContract</span><span class="p">(</span><span class="s1">&#39;EuroCommercialPaperContract&#39;</span><span class="p">);</span>
@@ -418,8 +418,9 @@ PaperNet or BondNet this would be easy:</p>
 <span class="kr">const</span> <span class="nx">bondContract</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">network2</span><span class="p">.</span><span class="nx">getContract</span><span class="p">(</span><span class="s1">&#39;BondContract&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>In these examples, note how we didn’t use a qualifying namespace – we assumed
-only one smart contract per file.</p>
+<p>In these examples, note how we didn’t use a qualifying contract name – we have
+only one smart contract per file, and <code class="docutils literal notranslate"><span class="pre">getContract()</span></code> will use the first
+contract it finds.</p>
 <p>Recall the transaction MagnetoCorp uses to issue its first commercial paper:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Txn</span> <span class="o">=</span> <span class="n">issue</span>
 <span class="n">Issuer</span> <span class="o">=</span> <span class="n">MagnetoCorp</span>

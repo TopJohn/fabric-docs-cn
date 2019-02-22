@@ -48,6 +48,19 @@ The following metrics are currently exported for consumption by Prometheus.
 |                                                     |           |                                                            | channel            |
 |                                                     |           |                                                            | chaincode          |
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_cluster_size                     | gauge     | Number of nodes in this channel.                           | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_committed_block_number           | gauge     | The block number of the latest block committed.            | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_is_leader                        | gauge     | The leadership status of the current node: 1 if it is the  | channel            |
+|                                                     |           | leader else 0.                                             |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_leader_changes                   | counter   | The number of leader changes.                              | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_proposal_failures                | counter   | The number of proposal failures.                           | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| consensus_etcdraft_snapshot_block_number            | gauge     | The block number of the latest snapshot.                   | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
 | consensus_kafka_batch_size                          | gauge     | The mean batch size in bytes sent to topics.               | topic              |
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
 | consensus_kafka_compression_ratio                   | gauge     | The mean compression ratio (as percentage) for topics.     | topic              |
@@ -127,7 +140,33 @@ The following metrics are currently exported for consumption by Prometheus.
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
 | gossip_leader_election_leader                       | gauge     | Peer is leader (1) or follower (0)                         | channel            |
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_membership_total_peers_known                 | gauge     | Total known peers                                          | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
 | gossip_payload_buffer_size                          | gauge     | Size of the payload buffer                                 | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_commit_block_duration               | histogram | Time it takes to commit private data and the corresponding | channel            |
+|                                                     |           | block (in seconds)                                         |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_fetch_duration                      | histogram | Time it takes to fetch missing private data from peers (in | channel            |
+|                                                     |           | seconds)                                                   |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_list_missing_duration               | histogram | Time it takes to list the missing private data (in         | channel            |
+|                                                     |           | seconds)                                                   |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_pull_duration                       | histogram | Time it takes to pull a missing private data element (in   | channel            |
+|                                                     |           | seconds)                                                   |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_purge_duration                      | histogram | Time it takes to purge private data (in seconds)           | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_reconciliation_duration             | histogram | Time it takes for reconciliation to complete (in seconds)  | channel            |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_retrieve_duration                   | histogram | Time it takes to retrieve missing private data elements    | channel            |
+|                                                     |           | from the ledger (in seconds)                               |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_send_duration                       | histogram | Time it takes to send a missing private data element (in   | channel            |
+|                                                     |           | seconds)                                                   |                    |
++-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
+| gossip_privdata_validation_duration                 | histogram | Time it takes to validate a block (in seconds)             | channel            |
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
 | gossip_state_commit_duration                        | histogram | Time it takes to commit a block in seconds                 | channel            |
 +-----------------------------------------------------+-----------+------------------------------------------------------------+--------------------+
@@ -226,6 +265,19 @@ associated with the metric.
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | chaincode.shim_requests_received.%{type}.%{channel}.%{chaincode}                        | counter   | The number of chaincode shim requests received.            |
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.cluster_size.%{channel}                                              | gauge     | Number of nodes in this channel.                           |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.committed_block_number.%{channel}                                    | gauge     | The block number of the latest block committed.            |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.is_leader.%{channel}                                                 | gauge     | The leadership status of the current node: 1 if it is the  |
+|                                                                                         |           | leader else 0.                                             |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.leader_changes.%{channel}                                            | counter   | The number of leader changes.                              |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.proposal_failures.%{channel}                                         | counter   | The number of proposal failures.                           |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| consensus.etcdraft.snapshot_block_number.%{channel}                                     | gauge     | The block number of the latest snapshot.                   |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | consensus.kafka.batch_size.%{topic}                                                     | gauge     | The mean batch size in bytes sent to topics.               |
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | consensus.kafka.compression_ratio.%{topic}                                              | gauge     | The mean compression ratio (as percentage) for topics.     |
@@ -294,7 +346,33 @@ associated with the metric.
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | gossip.leader_election.leader.%{channel}                                                | gauge     | Peer is leader (1) or follower (0)                         |
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.membership.total_peers_known.%{channel}                                          | gauge     | Total known peers                                          |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | gossip.payload_buffer.size.%{channel}                                                   | gauge     | Size of the payload buffer                                 |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.commit_block_duration.%{channel}                                        | histogram | Time it takes to commit private data and the corresponding |
+|                                                                                         |           | block (in seconds)                                         |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.fetch_duration.%{channel}                                               | histogram | Time it takes to fetch missing private data from peers (in |
+|                                                                                         |           | seconds)                                                   |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.list_missing_duration.%{channel}                                        | histogram | Time it takes to list the missing private data (in         |
+|                                                                                         |           | seconds)                                                   |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.pull_duration.%{channel}                                                | histogram | Time it takes to pull a missing private data element (in   |
+|                                                                                         |           | seconds)                                                   |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.purge_duration.%{channel}                                               | histogram | Time it takes to purge private data (in seconds)           |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.reconciliation_duration.%{channel}                                      | histogram | Time it takes for reconciliation to complete (in seconds)  |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.retrieve_duration.%{channel}                                            | histogram | Time it takes to retrieve missing private data elements    |
+|                                                                                         |           | from the ledger (in seconds)                               |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.send_duration.%{channel}                                                | histogram | Time it takes to send a missing private data element (in   |
+|                                                                                         |           | seconds)                                                   |
++-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
+| gossip.privdata.validation_duration.%{channel}                                          | histogram | Time it takes to validate a block (in seconds)             |
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+
 | gossip.state.commit_duration.%{channel}                                                 | histogram | Time it takes to commit a block in seconds                 |
 +-----------------------------------------------------------------------------------------+-----------+------------------------------------------------------------+

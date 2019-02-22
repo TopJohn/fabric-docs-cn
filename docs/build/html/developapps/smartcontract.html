@@ -248,7 +248,7 @@ contains the transaction definitions for commercial paper – <strong>issue</str
 and <strong>redeem</strong>. It’s these transactions that bring commercial papers into
 existence and move them through their lifecycle. We’ll examine these
 <a class="reference external" href="#transaction-definition">transactions</a> soon, but for now notice how
-<code class="docutils literal notranslate"><span class="pre">CommericalPaperContract</span></code> extends the Hyperledger Fabric <code class="docutils literal notranslate"><span class="pre">Contract</span></code>
+<code class="docutils literal notranslate"><span class="pre">CommercialPaperContract</span></code> extends the Hyperledger Fabric <code class="docutils literal notranslate"><span class="pre">Contract</span></code>
 <a class="reference external" href="https://fabric-shim.github.io/release-1.4/fabric-contract-api.Contract.html">class</a>.
 This built-in class, and the <code class="docutils literal notranslate"><span class="pre">Context</span></code> class, were brought into scope earlier:</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="p">{</span> <span class="nx">Contract</span><span class="p">,</span> <span class="nx">Context</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fabric-contract-api&#39;</span><span class="p">);</span>
@@ -260,7 +260,7 @@ as automatic method invocation, a
 <a class="reference external" href="./transactionhandler.html">transaction handlers</a>, and class-shared state.</p>
 <p>Notice also how the class constructor uses its
 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super">superclass</a>
-to initialize itself with a <a class="reference external" href="./namespace.html">namespace</a>:</p>
+to initialize itself with an explicit <a class="reference external" href="./contractname.html">contract name</a>:</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="s1">&#39;org.papernet.commercialpaper&#39;</span><span class="p">);</span>
 <span class="p">}</span>

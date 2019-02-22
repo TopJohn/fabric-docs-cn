@@ -62,7 +62,7 @@ contains the transaction definitions for commercial paper -- **issue**, **buy**
 and **redeem**. It's these transactions that bring commercial papers into
 existence and move them through their lifecycle. We'll examine these
 [transactions](#transaction-definition) soon, but for now notice how
-`CommericalPaperContract` extends the Hyperledger Fabric `Contract`
+`CommercialPaperContract` extends the Hyperledger Fabric `Contract`
 [class](https://fabric-shim.github.io/release-1.4/fabric-contract-api.Contract.html).
 This built-in class, and the `Context` class, were brought into scope earlier:
 
@@ -77,7 +77,7 @@ as automatic method invocation, a
 
 Notice also how the class constructor uses its
 [superclass](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super)
-to initialize itself with a [namespace](./namespace.html):
+to initialize itself with an explicit [contract name](./contractname.html):
 
 ```JavaScript
 constructor() {

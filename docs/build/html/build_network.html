@@ -849,20 +849,20 @@ language has been installed on the peer.</p>
 </div>
 <p><strong>Golang</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Node.js</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Node.js chaincode</span>
 <span class="c1"># make note of the -l flag to indicate &quot;node&quot; chaincode</span>
 <span class="c1"># for node chaincode -p takes the absolute path to the node.js chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Java</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># make note of the -l flag to indicate &quot;java&quot; chaincode</span>
 <span class="c1"># for java chaincode -p takes the absolute path to the java chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>When we instantiate the chaincode on the channel, the endorsement policy will be
@@ -883,20 +883,20 @@ in Org2. These commands place the specified source
 code flavor onto our peer’s filesystem.</p>
 <p><strong>Golang</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Node.js</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Node.js chaincode</span>
 <span class="c1"># make note of the -l flag to indicate &quot;node&quot; chaincode</span>
 <span class="c1"># for node chaincode -p takes the absolute path to the node.js chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Java</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># make note of the -l flag to indicate &quot;java&quot; chaincode</span>
 <span class="c1"># for java chaincode -p takes the absolute path to the java chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>Next, instantiate the chaincode on the channel. This will initialize the
@@ -1006,20 +1006,20 @@ in Org2. These commands place the specified source
 code flavor onto our peer’s filesystem.</p>
 <p><strong>Golang</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">p</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">go</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Node.js</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this installs the Node.js chaincode</span>
 <span class="c1"># make note of the -l flag to indicate &quot;node&quot; chaincode</span>
 <span class="c1"># for node chaincode -p takes the absolute path to the node.js chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">node</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">node</span><span class="o">/</span>
 </pre></div>
 </div>
 <p><strong>Java</strong></p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># make note of the -l flag to indicate &quot;java&quot; chaincode</span>
 <span class="c1"># for java chaincode -p takes the absolute path to the java chaincode</span>
-<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">chaincode_example02</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
+<span class="n">peer</span> <span class="n">chaincode</span> <span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">mycc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">1.0</span> <span class="o">-</span><span class="n">l</span> <span class="n">java</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gopath</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hyperledger</span><span class="o">/</span><span class="n">fabric</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">chaincode</span><span class="o">/</span><span class="n">abstore</span><span class="o">/</span><span class="n">java</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
@@ -1077,7 +1077,7 @@ the MSP path is specified in our docker compose.</li>
 Org2MSP (<code class="docutils literal notranslate"><span class="pre">peer0.org2.example.com</span></code>) are then updated.  We do this by passing
 the <code class="docutils literal notranslate"><span class="pre">Org1MSPanchors.tx</span></code> and <code class="docutils literal notranslate"><span class="pre">Org2MSPanchors.tx</span></code> artifacts to the ordering
 service along with the name of our channel.</li>
-<li>A chaincode - <strong>chaincode_example02</strong> - is installed on <code class="docutils literal notranslate"><span class="pre">peer0.org1.example.com</span></code> and
+<li>A chaincode - <strong>abstore</strong> - is installed on <code class="docutils literal notranslate"><span class="pre">peer0.org1.example.com</span></code> and
 <code class="docutils literal notranslate"><span class="pre">peer0.org2.example.com</span></code></li>
 <li>The chaincode is then “instantiated” on <code class="docutils literal notranslate"><span class="pre">mychannel</span></code>. Instantiation
 adds the chaincode to the channel, starts the container for the target peer,
@@ -1098,7 +1098,7 @@ to move “10” from “a” to “b”</li>
 <li>A query is sent to <code class="docutils literal notranslate"><span class="pre">peer0.org2.example.com</span></code> for the value of “a”. A
 value of 90 is returned, correctly reflecting the previous
 transaction during which the value for key “a” was modified by 10.</li>
-<li>The chaincode - <strong>chaincode_example02</strong> - is installed on <code class="docutils literal notranslate"><span class="pre">peer1.org2.example.com</span></code></li>
+<li>The chaincode - <strong>abstore</strong> - is installed on <code class="docutils literal notranslate"><span class="pre">peer1.org2.example.com</span></code></li>
 <li>A query is sent to <code class="docutils literal notranslate"><span class="pre">peer1.org2.example.com</span></code> for the value of “a”. This starts a
 third chaincode container by the name of <code class="docutils literal notranslate"><span class="pre">dev-peer1.org2.example.com-mycc-1.0</span></code>. A
 value of 90 is returned, correctly reflecting the previous
@@ -1213,7 +1213,7 @@ the network pass <code class="docutils literal notranslate"><span class="pre">do
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">cli</span><span class="o">.</span><span class="n">yaml</span> <span class="o">-</span><span class="n">f</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">couch</span><span class="o">.</span><span class="n">yaml</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
 </pre></div>
 </div>
-<p><strong>chaincode_example02</strong> should now work using CouchDB underneath.</p>
+<p><strong>abstore</strong> should now work using CouchDB underneath.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you choose to implement mapping of the fabric-couchdb container
@@ -1224,7 +1224,7 @@ visualization of the database via the CouchDB web interface (Fauxton).
 Production environments would likely refrain from implementing port mapping in
 order to restrict outside access to the CouchDB containers.</p>
 </div>
-<p>You can use <strong>chaincode_example02</strong> chaincode against the CouchDB state database
+<p>You can use <strong>abstore</strong> chaincode against the CouchDB state database
 using the steps outlined above, however in order to exercise the CouchDB query
 capabilities you will need to use a chaincode that has data modeled as JSON,
 (e.g. <strong>marbles02</strong>). You can locate the <strong>marbles02</strong> chaincode in the
@@ -1237,7 +1237,7 @@ channel, use the following steps to interact with the <strong>marbles02</strong>
 </ul>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># be sure to modify the $CHANNEL_NAME variable accordingly for the instantiate command
 
-peer chaincode install -n marbles -v 1.0 -p github.com/chaincode/marbles02/go
+peer chaincode install -n marbles -v 1.0 -p github.com/hyperledger/fabric-samples/chaincode/marbles02/go
 peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n marbles -v 1.0 -c &#39;{&quot;Args&quot;:[&quot;init&quot;]}&#39; -P &quot;OR (&#39;Org0MSP.peer&#39;,&#39;Org1MSP.peer&#39;)&quot;
 </pre></div>
 </div>
