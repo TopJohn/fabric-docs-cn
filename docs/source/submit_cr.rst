@@ -1,12 +1,9 @@
 提交你的第一个变更申请(CR)
 -----------------------------------------
 
-We are using
-`Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__ to
-manage code contributions and reviews. If you are unfamiliar with Gerrit,
-please review this :doc:`document <Gerrit/gerrit>` before proceeding.
-
-
+我们使用
+`Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__
+进行代码贡献和审查工作。如果你不熟悉Gerrit，请先参考 :doc:`文档 <Gerrit/gerrit>` 。
 
 .. note:: Gerrit has a reputation of having a clunky user experience. However,
           the Google team has been working on improving this, and they have
@@ -16,14 +13,18 @@ please review this :doc:`document <Gerrit/gerrit>` before proceeding.
 
           .. image:: images/NewGerritUI.png
 
-Setting up your SSH key
+.. note:: Gerrit的用户体验不是很好。但是，谷歌团队已经在提升这方面了，他们添加了"New UI"来提升用户体验。 
+          请参考上述链接Fabric Gerrit页面下方的按钮。
+
+          .. image:: images/NewGerritUI.png
+
+设置你的SSH key
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you can submit a change set for review, you will need to register your
-public SSH key. Login to
-`Gerrit <https://gerrit.hyperledger.org>`__ with your
-:doc:`LFID <Gerrit/lf-account>`, and click on your name in the upper
-right-hand corner of your browser window and then click 'Settings'.
+在你提交变更之前，你需要注册你的SSH key。使用你的
+:doc:`LFID <Gerrit/lf-account>` 登录
+`Gerrit <https://gerrit.hyperledger.org>`__ ，
+点击浏览器右上角你的名字，然后点击 'Settings'。
 
 .. image:: images/Settings.png
     :width: 300px
