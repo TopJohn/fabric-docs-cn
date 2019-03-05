@@ -35,7 +35,7 @@
 ----------------------------------
 
 为了参与到Hyperledger Fabric项目的开发中来，你首先需要一个 :doc:`Linux Foundation
-account <Gerrit/lf-account>`。
+账号 <Gerrit/lf-account>`。
 你需要实用你的LF ID来访问所有的Hyperledger社区的工具，包括 
 `Gerrit <https://gerrit.hyperledger.org>`__，
 `Jira <https://jira.hyperledger.org>`__，
@@ -236,8 +236,8 @@ Fabric相关的发布路线的史诗维护在
 法律材料
 -----------
 
-**Note:** 每一个源文件必须包括Apache Software License 2.0。可以参考 `license header
-<https://github.com/hyperledger/fabric/blob/master/docs/source/dev-setup/headers.txt>`__.
+**注意:** 每一个源文件必须包括Apache Software License 2.0。可以参考 `license header
+<https://github.com/hyperledger/fabric/blob/master/docs/source/dev-setup/headers.txt>`__ 。
 
 我们尽可能努力让贡献边等简单。这个协议为我们提供了贡献相关的法律相关的知识。
 我们使用和Linux® Kernel
