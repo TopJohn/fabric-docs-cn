@@ -1,10 +1,12 @@
-Submitting your first change request (CR)
+提交你的第一个变更申请(CR)
 -----------------------------------------
 
 We are using
 `Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__ to
 manage code contributions and reviews. If you are unfamiliar with Gerrit,
 please review this :doc:`document <Gerrit/gerrit>` before proceeding.
+
+
 
 .. note:: Gerrit has a reputation of having a clunky user experience. However,
           the Google team has been working on improving this, and they have
