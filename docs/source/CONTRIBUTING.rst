@@ -13,8 +13,8 @@
 
 作为普通用户：
 
-- `提出功能/改进建议`_
-- `反馈错误`_
+- `提出功能/改进建议`_ 
+- `反馈错误`_ 
 - 帮助测试在
   `release roadmap <https://jira.hyperledger.org/secure/Dashboard.jspa?selectPageId=10104>`_
   上即将发布的史诗。将问题通过Jira或者
