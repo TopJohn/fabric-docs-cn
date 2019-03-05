@@ -11,16 +11,18 @@
 ------------------
 不管作为普通用户还是开发者，这里都有很多为Hyperledger Fabric做贡献的方法。
 
-作为普通用户：
 
-- `提出功能/改进建议`_
-- `反馈错误`_
-- 帮助测试在
-  `release roadmap <https://jira.hyperledger.org/secure/Dashboard.jspa?selectPageId=10104>`_
-  上即将发布的史诗。将问题通过Jira或者
-  `RocketChat <https://chat.hyperledger.org>`_
-  反馈给开发者。
 
+获取一个Linux Foundation的账号
+----------------------------------
+
+为了参与到Hyperledger Fabric项目的开发中来，你首先需要一个 :doc:`Linux Foundation
+账号 <Gerrit/lf-account>`。
+你需要实用你的LF ID来访问所有的Hyperledger社区的工具，包括 
+`Gerrit <https://gerrit.hyperledger.org>`__，
+`Jira <https://jira.hyperledger.org>`__，
+`RocketChat <https://chat.hyperledger.org/>`__，和
+`Wiki <https://wiki.hyperledger.org/start>`__ (仅用于编辑)。
 
 项目管理
 ------------------
