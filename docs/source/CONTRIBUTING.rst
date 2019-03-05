@@ -21,6 +21,15 @@
   `RocketChat <https://chat.hyperledger.org>`_
   反馈给开发者。
 
+作为开发者：
+
+- 如果你的时间不多，可以考虑选择一些
+  `"想要帮助的" <https://jira.hyperledger.org/issues/?filter=10147>`_ 任务，
+  参考 `修复问题和认领正在进行的任务`_ 。
+
+- 如果你可以全职开发，可以提一个新的特性（参考 `提出功能/改进建议`_ ）带领一个团队来实现它，或者加入在已经存在的史诗中的团队。如果你在
+  `release roadmap <https://jira.hyperledger.org/secure/Dashboard.jspa?selectPageId=10104>`_ 发现了一个你感兴趣的史诗，请及时通过Jira或者
+  `RocketChat <https://chat.hyperledger.org>`_ 联系分配到任务的人，和他们一起完成这个史诗。
 
 Ways to contribute
 ------------------
