@@ -255,9 +255,6 @@ Fabric相关的发布路线的史诗维护在
 
     Signed-off-by: John Doe <john.doe@example.com>
 
-You can include this automatically when you commit a change to your
-local git repository using ``git commit -s``.
-
 你可以使用 ``git commit -s`` 在提交的时候来自动带上你的签名。
 
 相关的主题
