@@ -37,9 +37,7 @@ Hyperledger Fabric使用Go Vendoring来进行包管理。
 这意味着所有的包都存放于
 ``$GOPATH/src/github.com/hyperledger/fabric/vendor`` 文件夹中。
 当执行 ``go install`` 或者 ``go build`` Go将使用这个文件夹中的包来替代PGOPATH中的包。
-我们使用
-`dep <https://golang.github.io/dep/>`__ 
-来管理 ``vendor`` 目录中的包。
+我们使用 `dep <https://golang.github.io/dep/>`__ 来管理 ``vendor`` 目录中的包。
 
 
 .. Licensed under Creative Commons Attribution 4.0 International License
