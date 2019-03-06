@@ -184,7 +184,7 @@ Now, in a terminal window on your laptop, paste and run the command. e.g.
 如果要检查你的CR的CI进度，你可以在Gerrit上进行查看，下面的URL是你之前提交的CR的结果。
 在页面的底部会有你提交的历史记录，会显示一系列带有 "Hyperledger Jobbuilder"的动作来对应CI执行的进度。
 
-当完成的时候， "Hyperledger Jobbuilder" 会添加一个*+1 vote* 如果失败了会添加一个 *-1 vote* 。
+当完成的时候， "Hyperledger Jobbuilder" 会添加一个 *+1 vote* 如果失败了会添加一个 *-1 vote* 。
 
 如果失败了，请查看CR关联的日志。如果你发现CR有问题，请继续下面的部分。
 
