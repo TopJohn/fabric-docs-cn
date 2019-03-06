@@ -13,12 +13,9 @@ vet <https://golang.org/cmd/vet/>`__ -
 API 文档
 ^^^^^^^^^^^^^^^^^
 
-The API documentation for Hyperledger Fabric's Golang APIs is available
-in `GoDoc <https://godoc.org/github.com/hyperledger/fabric>`_.
-
 Hyperledger Fabric的 Golang API文档在
- `GoDoc <https://godoc.org/github.com/hyperledger/fabric>`_
- 中可以看到。
+`GoDoc <https://godoc.org/github.com/hyperledger/fabric>`_
+中可以看到。
 
 生成 gRPC 代码
 ---------------------
