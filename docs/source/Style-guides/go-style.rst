@@ -4,14 +4,6 @@
 Golang编程
 ~~~~~~~~~~~~~~
 
-We code in Go™ and strictly follow the `best
-practices <https://golang.org/doc/effective_go.html>`__ and will not
-accept any deviations. You must run the following tools against your Go
-code and fix all errors and warnings: -
-`golint <https://github.com/golang/lint>`__ - `go
-vet <https://golang.org/cmd/vet/>`__ -
-`goimports <https://godoc.org/golang.org/x/tools/cmd/goimports>`__
-
 我们使用Go™编程，遵循 `最佳实践 <https://golang.org/doc/effective_go.html>`__ 
 并且不允许有偏差。你必须使用下述工具来检测你的代码，修复错误和警告：
  - `golint <https://github.com/golang/lint>`__ - `go
