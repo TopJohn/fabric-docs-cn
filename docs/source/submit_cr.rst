@@ -190,7 +190,7 @@ Now, in a terminal window on your laptop, paste and run the command. e.g.
 
 如果你发现你的CR没有什么问题，或许CI程序仅仅因为一些无关的原因失败了。
 在这种情况下，你可以通过回复你的CR "reverify"来重新运行CI程序。检查
-<https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst>`__
+`<https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst>`__
 来关注相关信息和选项。
 
 修改你的变更请求
