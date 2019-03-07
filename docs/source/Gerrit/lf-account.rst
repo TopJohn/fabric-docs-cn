@@ -8,7 +8,7 @@
 创建一个Linux Foundation ID
 ------------------------------
 
-1. 登陆 `Linux Foundation ID 网站 <https://identity.linuxfoundation.org/>`__ 。
+1. 登录 `Linux Foundation ID 网站 <https://identity.linuxfoundation.org/>`__ 。
 
 2. 选择 ``I need to create a Linux Foundation ID`` 选项，然后填写出现的表单。
 
