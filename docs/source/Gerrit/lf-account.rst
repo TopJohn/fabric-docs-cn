@@ -2,7 +2,7 @@
 =====================================
 
 贡献Hyperledger Fabric的代码需要一个
-`Linux Foundation <https://linuxfoundation.org/>`__
+`Linux Foundation <https://linuxfoundation.org/>`__ 
 账户---如果你没有的话，根据下面的步骤来创建一个。
 
 创建一个Linux Foundation ID
