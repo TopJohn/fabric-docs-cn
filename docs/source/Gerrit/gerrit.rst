@@ -82,7 +82,7 @@ Gerrit的全面演练超出了本文档的范围。互联网上有大量的资�
 .. note:: 如果你希望，你可以使用  `git-review <#git-review>`__ 
           工具替代以下内容。例如
 
-添加以下部分 `.git/config` ，并用你的gerrit id替换 ``<USERNAME>`` 。
+添加以下部分 ``.git/config`` ，并用你的gerrit id替换 ``<USERNAME>`` 。
 
 ::
 
