@@ -48,8 +48,8 @@
     Signed-off-by: Your Name <commit-sender@email.address>
 
 
- ``Signed-off-by:`` 行中的名字和邮箱必须和变更的作者信息相匹配。
- 请确保你的 ``.gitconfig`` 文件是正确的。
+``Signed-off-by:`` 行中的名字和邮箱必须和变更的作者信息相匹配。
+请确保你的 ``.gitconfig`` 文件是正确的。
 
 如果变更中包含了用以其他变更的代码，但是现在还不是最终的集合，请将这些信息告知审核者。
 
