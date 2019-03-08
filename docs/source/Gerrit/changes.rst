@@ -72,7 +72,7 @@
 如果你发现你的CR没有问题，那么可能是CI过程因为某些和你的CR无关的原因导致的失败。
 在这种情况下，你可能希望使用简单的 "reverify" 来重新启动CI过程。
 有关此问题的更多信息和选项，请查看
- `CI 管理页面
+`CI 管理页面
 <https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst>`__ 。
 
 .. Licensed under Creative Commons Attribution 4.0 International License
