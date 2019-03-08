@@ -8,8 +8,7 @@
 
 Gerrit为用户分配了以下角色：
 
--  **Submitters**: 可以提交变更以供考虑，审查别人的代码变更，
-   分别通过投票 +1 或者 -1 接受或者拒绝的建议。
+-  **Submitters**: 可以提交变更以供考虑，审查别人的代码变更，分别通过投票 +1 或者 -1 接受或者拒绝的建议。
 
 -  **Maintainers**: 基于审查者的反馈进行 +2 或者 -2 的投票，以此来批准或者拒绝变更。
 
@@ -38,7 +37,7 @@ Gerrit的全面演练超出了本文档的范围。互联网上有大量的资�
 
 无论处理新特性还是错误：
 
-1. 打开Gerrit的`项目页面 <https://gerrit.hyperledger.org/r/#/admin/projects/>`__
+1. 打开Gerrit的 `项目页面 <https://gerrit.hyperledger.org/r/#/admin/projects/>`__ 。
 
 2. 选择一个你希望工作的项目。
 
@@ -83,7 +82,7 @@ Gerrit的全面演练超出了本文档的范围。互联网上有大量的资�
 .. note:: 如果你希望，你可以使用  `git-review <#git-review>`__ 
           工具替代以下内容。例如
 
-添加以下部分 ``.git/config` ，并用你的gerrit id替换 ``<USERNAME>`` 。
+添加以下部分 `.git/config` ，并用你的gerrit id替换 ``<USERNAME>`` 。
 
 ::
 
