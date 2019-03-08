@@ -1,54 +1,41 @@
-Submitting a Change to Gerrit
+提交一个变更到Gerrit
 =============================
 
-Carefully review the following before submitting a change to the
-Hyperledger Fabric code base. These guidelines apply to developers that
-are new to open source, as well as to experienced open source developers.
+在向Hyperledger Fabric代码库提交代码变更之前，请仔细阅读下述内容。
+这些指南适用于开源新手，同样也适用于经验丰富的开源开发人员。
 
-Change Requirements
+变更要求
 -------------------
 
-This section contains guidelines for submitting code changes for review.
-For more information on how to submit a change using Gerrit, please see
-:doc:`Working with Gerrit <gerrit>`.
+这节包含了提交用于审核的代码变更的指南。关于如何使用Gerrit提交变更的信息，请参考
+:doc:`使用Gerrit进行工作 <gerrit>` 。
 
-All changes to Hyperledger Fabric are submitted as Git commits via Gerrit.
-Each commit must contain:
+所有对Hyperledger Fabric的变更都是利用Gerrit通过Git commits进行提交的。
+每个提交必须包括：
 
--  a short and descriptive subject line that is 55 characters or fewer,
-   followed by a blank line,
--  a change description with the logic or reasoning for your changes,
-   followed by a blank line,
--  a Signed-off-by line, followed by a colon (Signed-off-by:), and
--  a Change-Id identifier line, followed by a colon (Change-Id:). Gerrit
-   won't accept patches without this identifier.
+-  一个简短的描述性的主题行，不超过55个字符，后面跟上一行空行。
+-  包含逻辑的描述或者变更的原因说明，后面再跟一行空行。
+-  一行Signed-off-by，跟在(Signed-off-by:)后面。
+-  一行Change-Id标识行，跟在(Change-Id:)后面。Gerrit不会接受没有这个标识的行。
 
-A commit with the above details is considered well-formed.
+一个具备以上格式的提交被认为是一个良好的提交。
 
-.. note:: You don't need to supply the Change-Id identifier for a new
-          commit; this is added automatically by the ``commit-msg``
-          Git hook associated with the repository.
-          If you subsequently amend your commit and resubmit it,
-          using the same Change-Id value as the initial commit will
-          guarantee that Gerrit will recognize that subsequent commit
-          as an amended commit with respect to the earlier one.
+.. note:: 你不需要为新的提交提供Change-Id标识符； ``commit-msg`` 仓库关联的
+          Git钩子会自动添加。如果你接下来修改了之前的提价并且重新提交了，
+          然后使用与初始提交相同的Change-Id将保证Gerrit识别后续提交为与之前提交相关的修改提交。
 
-All changes and topics sent to Gerrit must be well-formed.
-In addition to the above mandatory content in a commit, a commit message
-should include:
+发送给Gerrit的所有变更和主题必须是符合上述格式的。
+除了上述的强制的格式之外，一个提交消息需要包括：
 
--  **what** the change does,
--  **why** you chose that approach, and
--  **how** you know it works --- for example, which tests you ran.
+-  **what** 变更做了什么，
+-  **why** 为什么你选择这种方法，
+-  **how** 你怎么知道这种方法可行---例如，你运行了哪些测试。
 
-Commits must :doc:`build cleanly <../dev-setup/build>` when applied on
-top of each other, thus avoiding breaking bisectability. Each commit
-should address a single identifiable JIRA issue and should be logically
-self-contained. For example, one commit might fix whitespace issues,
-another commit might rename a function, while a third commit could
-change some code's functionality.
+提交必须 :doc:`build cleanly <../dev-setup/build>` ，从而避免破坏可分割性。
+每个提交都需要有一个JIRA标识，在逻辑上独立。举个例子，一个提交可能会修复一个空白问题，
+另一个提交可能会重命名一个函数，第三个提交可能会修改一些代码的功能。
 
-A well-formed commit is illustrated below in detail:
+下面详细说明了一个格式良好的提交：
 
 ::
 
@@ -60,44 +47,33 @@ A well-formed commit is illustrated below in detail:
     Change-Id: IF7b6ac513b2eca5f2bab9728ebd8b7e504d3cebe1
     Signed-off-by: Your Name <commit-sender@email.address>
 
-The name in the ``Signed-off-by:`` line and your email must match the change
-authorship information. Make sure your personal ``.gitconfig`` file is set up
-correctly.
 
-When a change is included in the set to enable other changes, but it
-will not be part of the final set, please let the reviewers know this.
+ ``Signed-off-by:`` 行中的名字和邮箱必须和变更的作者信息相匹配。
+ 请确保你的 ``.gitconfig`` 文件是正确的。
 
-Check that your change request is validated by the CI process
+如果变更中包含了用以其他变更的代码，但是现在还不是最终的集合，请将这些信息告知审核者。
+
+检查你的变更是否在CI校验通过了
 -------------------------------------------------------------
 
-To ensure stability of the code and limit possible regressions, we use
-a Continuous Integration (CI) process based on Jenkins which triggers
-a build on several platforms and runs tests against every change
-request being submitted. It is your responsibility to check that your
-CR passes these tests. No CR will ever be merged if it fails the
-tests and you shouldn't expect anybody to pay attention to your CRs
-until they pass the CI tests.
+为了保证代码的稳定性并限制可能的回归，我们使用基于Jenkins的持续集成（CI）流程，
+该流程触发多个平台上的构建，并针对变更请求运行测试。你也有责任检查你的CR是否通过了测试。
+在没有通过测试的前提下CR是不会被合并的。
+在CRs通过CI的测试之前，你不应该期望任何人对你的CR作出回应。
 
-To check on the status of the CI process, simply look at your CR on
-Gerrit, following the URL that was given to you as the result of the
-push in the previous step. The History section at the bottom of the
-page will display a set of actions taken by "Hyperledger Jobbuilder"
-corresponding to the CI process being executed.
+为了检查CI的进度，只需要按照上一中推送给你的URL，在Gerrit上进行查看。
+页面底部的“历史记录”会显示正在执行的CI过程对应的“Hyperledger Jobbuilder”所采取的一组操作。
 
-Upon completion, "Hyperledger Jobbuilder" will add to the CR a *+1
-vote* if successful and a *-1 vote* otherwise.
+完成后，如果成功了 "Hyperledger Jobbuilder" 会添加一个 a *+1 投票* ，否则则添加一个 *-1 投票* 。
 
-In case of failure, explore the logs linked from the CR History. If
-you spot a problem with your CR, amend your commit and push it to
-update it, which will automatically kick off the CI process again.
+如果失败了，请浏览CR历史记录的链接。如果你发现CR有问题，那么请修改你的提交，并将它进行更新，
+这样它会再次启动CI流程。
 
-If you see nothing wrong with your CR, it might be that the CI process
-simply failed for some reason unrelated to your change. In that case
-you may want to restart the CI process by posting a reply to your CR
-with the simple content "reverify". Check the `CI management page
-<https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst>`__
-for additional information and options on this.
-
+如果你发现你的CR没有问题，那么可能是CI过程因为某些和你的CR无关的原因导致的失败。
+在这种情况下，你可能希望使用简单的 "reverify" 来重新启动CI过程。
+有关此问题的更多信息和选项，请查看
+ `CI 管理页面
+<https://github.com/hyperledger/ci-management/blob/master/docs/source/fabric_ci_process.rst>`__ 。
 
 .. Licensed under Creative Commons Attribution 4.0 International License
    https://creativecommons.org/licenses/by/4.0/

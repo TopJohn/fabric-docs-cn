@@ -1,4 +1,4 @@
-Working with Gerrit
+使用Gerrit进行工作
 -------------------
 
 Follow these instructions to collaborate on Hyperledger Fabric
