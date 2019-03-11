@@ -1,120 +1,101 @@
-Gerrit Recommended Practices
+Gerrit 最佳实践
 ============================
 
-This document presents some best practices to help you use Gerrit more
-effectively. The intent is to show how content can be submitted easily.
-Use the recommended practices to reduce your troubleshooting time and
-improve participation in the community.
+本文档介绍了一些帮助您更有效地使用Gerrit的最佳实践。目的是展示如何轻松提交内容。
+使用建议的做法可以减少故障排查的实践，提高社区参与度。
 
-Browsing the Git Tree
+浏览Git Tree
 ---------------------
 
-Visit
+访问
 `Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__
-then select ``Projects --> List --> SELECT-PROJECT --> Branches``.
-Select the branch that interests you, click on ``gitweb`` located on the
-right-hand side. Now, ``gitweb`` loads your selection on the Git web
-interface and redirects appropriately.
+然后选择 ``Projects --> List --> SELECT-PROJECT --> Branches`` 。
+选择你感兴趣的分支，点击右边的 ``gitweb`` 。 
+现在， ``gitweb`` 将你的选择载入到了Git Web界面上来了。
 
-Watching a Project
+关注一个项目
 ------------------
 
-Visit
-`Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__,
-then select ``Settings``, located on the top right corner. Select
-``Watched Projects`` and then add any projects that interest you.
+浏览
+`Gerrit <https://gerrit.hyperledger.org/r/#/admin/projects/fabric>`__ ，
+选择右上角的 ``Settings`` 。选择
+``Watched Projects`` 然后添加你感兴趣的项目。
 
-Commit Messages
+提交信息
 ---------------
 
-Gerrit follows the Git commit message format. Ensure the headers are at
-the bottom and don't contain blank lines between one another. The
-following example shows the format and content expected in a commit
-message:
+Gerrit遵循Git提交消息的格式。确保头部位于底部，并且彼此之间不包含空行。
+以下示例显示了提交信息中预期的格式和内容：
 
-Brief (no more than 55 chars) one line description.
 
-Elaborate summary of the changes made referencing why (motivation), what
-was changed and how it was tested. Note also any changes to
-documentation made to remain consistent with the code changes, wrapping
-text at 72 chars/line.
+简短的（不超过55个字符）的一行描述。
+
+精简表明为什么（动机）的描述，变更做了什么，以及怎么样测试的。
+任何对文档所做的变更需要与代码保持一致，每行需要在72个字符以内。
+
 
 | Jira: FAB-100
 | Change-Id: LONGHEXHASH
 | Signed-off-by: Your Name your.email\@example.org
 | AnotherExampleHeader: An Example of another Value
 
-The Gerrit server provides a precommit hook to autogenerate the
-Change-Id which is one time use.
+Gerrit服务器提供了一个提交前的钩子来自动生成使用的Change-Id。
 
-**Recommended reading:** `How to Write a Git Commit
-Message <https://chris.beams.io/posts/git-commit/>`__
+**推荐阅读:** `如何编写Git提交消息 <https://chris.beams.io/posts/git-commit/>`__
 
-Avoid Pushing Untested Work to a Gerrit Server
+避免将未经测试的代码推送到Gerrit服务器
 ----------------------------------------------
 
-To avoid pushing untested work to Gerrit.
+避免将未经测试的代码推送到Gerrit。
 
-Check your work at least three times before pushing your change to
-Gerrit. Be mindful of what information you are publishing.
+在将更改推送到Gerrit之前，请至少确认三遍。注意你要提交的信息。
 
-Keeping Track of Changes
+更踪变更
 ------------------------
 
--  Set Gerrit to send you emails:
+-  设置Gerrit给你发电子邮件：
 
--  Gerrit will add you to the email distribution list for a change if a
-   developer adds you as a reviewer, or if you comment on a specific
-   Patch Set.
+-  如果一个开发者把你添加为审查者或者你评论了某个补丁，Gerrit会将你添加到变更的邮件列表中。
 
--  Opening a change in Gerrit's review interface is a quick way to
-   follow that change.
+-  在Gerrit审核页面打开一个变更是一种快速跟踪变更的方法。
 
--  Watch projects in the Gerrit projects section at ``Gerrit``, select
-   at least *New Changes, New Patch Sets, All Comments* and *Submitted
-   Changes*.
+-  在 ``Gerrit``上关注Gerrit上的项目，至少选择一个*New Changes, New Patch Sets, All Comments* and *Submitted
+   Changes* 其中一个。
 
-Always track the projects you are working on; also see the
-feedback/comments mailing list to learn and help others ramp up.
+始终追踪你正在进行的项目；同时关注邮件列表里的反馈和评论，以此来学习护着帮助他人提升。
 
-Topic branches
+主题分支
 --------------
 
-Topic branches are temporary branches that you push to commit a set of
-logically-grouped dependent commits:
+主题分支是临时分支，你可以推送一组逻辑依赖的提交：
 
-To push changes from ``REMOTE/master`` tree to Gerrit for being reviewed
-as a topic in **TopicName** use the following command as an example:
+将更改从 ``REMOTE/master`` 树推送到Gerri 图,以便在 **TopicName** 中作为主题进行审核，
+请使用以下命令作为示例：
 
 $ git push REMOTE HEAD:refs/for/master/TopicName
 
-The topic will show up in the review ``UI`` and in the
-``Open Changes List``. Topic branches will disappear from the master
-tree when its content is merged.
+该主题将会出现在评论 ``UI`` 和 ``Open Changes List`` 中。
+主题分支在被合并到master分支之后将会消失。
 
-Creating a Cover Letter for a Topic
+为主题创建一个说明信
 -----------------------------------
 
-You may decide whether or not you'd like the cover letter to appear in
-the history.
+你可以决定说明信说否出现在历史中。
 
-1. To make a cover letter that appears in the history, use this command:
+1. 要让说明信显示在历史中，请使用下述命令：
 
 ::
 
     git commit --allow-empty
 
-Edit the commit message, this message then becomes the cover letter. The
-command used doesn't change any files in the source tree.
+编辑提交信息，这个信息将成为说明信。使用的命令不改变源树中的任何文件。
 
-2. To make a cover letter that doesn't appear in the history follow
-   these steps:
+2. 如果不需要说明信出现在历史中，请参照下述步骤：
 
--  | Put the empty commit at the end of your commits list so it can be
-     ignored
-   | without having to rebase.
+-  | 将空提交放在提交列表的末尾，以便可以忽略它
+   | 不需要任何修改。
 
--  Now add your commits
+-  现在添加你的提交
 
 ::
 
@@ -122,25 +103,23 @@ command used doesn't change any files in the source tree.
     git commit ...
     git commit ...
 
--  Finally, push the commits to a topic branch. The following command is
-   an example:
+-  最终，提交推送到主题分支。以下命令是一个示例：
 
 ::
 
     git push REMOTE HEAD:refs/for/master/TopicName
 
-If you already have commits but you want to set a cover letter, create
-an empty commit for the cover letter and move the commit so it becomes
-the last commit on the list. Use the following command as an example:
+如果你已经有提交但是你想设置说明信，
+请为说明信创建一个空提交并移动提交，使其成为最后一个提交。使用下面命令作为示例：
 
 ::
 
     git rebase -i HEAD~#Commits
 
-Be careful to uncomment the commit before moving it. ``#Commits`` is the
-sum of the commits plus your new cover letter.
+移动之前请小心取消注释。 ``#Commits`` 是你评论的总和加上你的说明信。
 
-Finding Available Topics
+
+查找可用的主题
 ------------------------
 
 ::
@@ -148,114 +127,112 @@ Finding Available Topics
        $ ssh -p 29418 gerrit.hyperledger.org gerrit query \ status:open project:fabric branch:master \
        | grep topic: | sort -u
 
--  `gerrit.hyperledger.org <https://gerrit.hyperledger.org>`__ Is the current URL where the project is
-   hosted.
--  *status* Indicates the topic's current status: open , merged,
-   abandoned, draft, merge conflict.
--  *project* Refers to the current name of the project, in this case
-   fabric.
--  *branch* The topic is searched at this branch.
--  *topic* The name of an specific topic, leave it blank to include them
-   all.
+-   `gerrit.hyperledger.org <https://gerrit.hyperledger.org>`__ 是当前项目托管的URL。
+
+-  *status* 指示主题的当前状态：打开，合并，放弃，草稿，合并冲突。
+
+-  *project* 指示了项目的当前名字，在本例中是fabric。
+
+-  *branch* 在branch中搜索主题。
+
+-  *topic* 特定主题的名字，如果为空则表示所有主题。
+
 -  *sort* Sorts the found topics, in this case by update (-u).
 
-Downloading or Checking Out a Change
+-  *sort* 对找到的主题进行排序，在本例中为update(-u)。
+
+下载或者检出变更
 ------------------------------------
 
-In the review UI, on the top right corner, the **Download** link
-provides a list of commands and hyperlinks to checkout or download diffs
-or files.
+在审查界面中的右上角， **Download** 链接提供了一系列的命令和超级链接来检出和下载差异或文件。
 
-We recommend the use of the *git review* plugin. The steps to install
-git review are beyond the scope of this document. Refer to the `git
-review
-documentation <https://wiki.openstack.org/wiki/Documentation/HowTo/FirstTimers>`__
-for the installation process.
+我们建议使用 *git review* 插件。安装git review的步骤超出了本文档的范围。
+有关安装过程，请参阅 `git review
+文档 <https://wiki.openstack.org/wiki/Documentation/HowTo/FirstTimers>`__ 。
 
-To check out a specific change using Git, the following command usually
-works:
+使用Git检出特定变更，请参照下述命令：
 
 ::
 
     git review -d CHANGEID
 
-If you don't have Git-review installed, the following commands will do
-the same thing:
+如果你没有安装Git-review，下面的命令可以做相同的事：
 
 ::
 
     git fetch REMOTE refs/changes/NN/CHANGEIDNN/VERSION \ && git checkout FETCH_HEAD
 
-For example, for the 4th version of change 2464, NN is the first two
-digits (24):
+举个例子，对于第四版更改 2464，NN是前两位数（24）：
 
 ::
 
     git fetch REMOTE refs/changes/24/2464/4 \ && git checkout FETCH_HEAD
 
-Using Draft Branches
+使用草稿分支
 --------------------
 
-You can use draft branches to add specific reviewers before you
-publishing your change. The Draft Branches are pushed to
-``refs/drafts/master/TopicName``
+你可以在发布更改之前使用草稿分支添加特定的审阅者。
+草稿分支被推送到 ``refs/drafts/master/TopicName`` 。
 
-The next command ensures a local branch is created:
+下一个命令是确保创建了本地分支：
 
 ::
 
     git checkout -b BRANCHNAME
 
-The next command pushes your change to the drafts branch under
-**TopicName**:
+下一个命令将你的更改推送到 **TopicName** 下的草稿分支：
 
 ::
 
     git push REMOTE HEAD:refs/drafts/master/TopicName
 
-Using Sandbox Branches
+使用沙箱分支
 ----------------------
 
-You can create your own branches to develop features. The branches are
-pushed to the ``refs/sandbox/USERNAME/BRANCHNAME`` location.
+你可以创建你自己的分支来开发新功能。
+分支被推送到 ``refs/sandbox/USERNAME/BRANCHNAME`` 。
 
-These commands ensure the branch is created in Gerrit's server.
+这些命令确保在Gerrit服务器上创建了分支。
 
 ::
 
     git checkout -b sandbox/USERNAME/BRANCHNAME
     git push --set-upstream REMOTE HEAD:refs/heads/sandbox/USERNAME/BRANCHNAME
 
-Usually, the process to create content is:
 
--  develop the code,
--  break the information into small commits,
--  submit changes,
--  apply feedback,
--  rebase.
+通常，创建内容的过程是：
 
-The next command pushes forcibly without review:
+-  开发代码，
+-  把信息分成小的提交，
+-  提交变更，
+-  等待反馈，
+-  rebase。
+
+下面的命令在没有审阅的情况下，强制推送了提交：
 
 ::
 
     git push REMOTE sandbox/USERNAME/BRANCHNAME
 
-You can also push forcibly with review:
+你也可以通过审查进行提交:
 
 ::
 
     git push REMOTE HEAD:ref/for/sandbox/USERNAME/BRANCHNAME
 
-Updating the Version of a Change
+更新变更的版本
 --------------------------------
 
-During the review process, you might be asked to update your change. It
-is possible to submit multiple versions of the same change. Each version
-of the change is called a patch set.
+在审查的过程中，你可能会被要求更新你的变更。可以对同一个变更提交多个版本。
+每个变更的版本叫做补丁集。
 
 Always maintain the **Change-Id** that was assigned. For example, there
 is a list of commits, **c0...c7**, which were submitted as a topic
 branch:
+
+始终保持分配的 **Change-Id** 。举个例子，有一系列提交， **c0...c7** ，
+作为主题分支的提交：
+
 
 ::
 
@@ -267,44 +244,39 @@ branch:
 
     git push REMOTE HEAD:refs/for/master/SOMETOPIC
 
-After you get reviewers' feedback, there are changes in **c3** and
-**c4** that must be fixed. If the fix requires rebasing, rebasing
-changes the commit Ids, see the
-`rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`__
-section for more information. However, you must keep the same Change-Id
-and push the changes again:
+在获得审查者的反馈后， **c3** 和 **c4** 中的2个提交必须被修复。
+如果修复需要rebase，rebase改变了提交Id，参考
+`rebasing <https://git-scm.com/book/en/v2/Git-Branching-Rebasing>`__ 
+获取更多信息。但是，你必须保持相同的Change-Id，并再次推送更改：
 
 ::
 
     git push REMOTE HEAD:refs/for/master/SOMETOPIC
 
-This new push creates a patches revision, your local history is then
-cleared. However you can still access the history of your changes in
-Gerrit on the ``review UI`` section, for each change.
+这个新的推送创建了一个补丁修订，然后清除你本地的历史记录。
+但是，对于每个更改，你可以在 ``review UI`` 中访问你的变更历史。
 
-It is also permitted to add more commits when pushing new versions.
+在推送新版本的时候，同样允许添加更多提交。
 
 Rebasing
 --------
 
-Rebasing is usually the last step before pushing changes to Gerrit; this
-allows you to make the necessary *Change-Ids*. The *Change-Ids* must be
-kept the same.
+Rebasing通常是杂i 推送变更到Gerrit的最后一步；这允许你进行必要的 *Change-Ids* 。
+*Change-Ids* 一定要保持一致。
 
--  **squash:** mixes two or more commits into a single one.
--  **reword:** changes the commit message.
--  **edit:** changes the commit content.
--  **reorder:** allows you to interchange the order of the commits.
--  **rebase:** stacks the commits on top of the master.
+-  **squash:** 合并2个或多个提交为一个提交。
+-  **reword:** 改变提交信息。
+-  **edit:** 改变提交内容。
+-  **reorder:** 允许你改变提交顺序。
+-  **rebase:**将提交堆叠到主分支上。
 
-Rebasing During a Pull
+在Pull的时候进行Rebasing
 ----------------------
 
-Before pushing a rebase to your master, ensure that the history has a
-consecutive order.
+在推送rebase到主分支之前，确保历史有一个连续的排序。
 
-For example, your ``REMOTE/master`` has the list of commits from **a0**
-to **a4**; Then, your changes **c0...c7** are on top of **a4**; thus:
+例如，你的 ``REMOTE/master`` 有从  **a0** 到  **a4**的提交， **c0...c7** 在  **a4** 上面；
+从而：
 
 ::
 
@@ -320,14 +292,14 @@ to **a4**; Then, your changes **c0...c7** are on top of **a4**; thus:
     ...
     c7
 
-If ``REMOTE/master`` receives commits **a5**, **a6** and **a7**. Pull
-with a rebase as follows:
+ 如果 ``REMOTE/master``  上收到了 **a5**, **a6** and **a7** 。
+ 可以使用以下方式进行rebase：
 
 ::
 
     git pull --rebase REMOTE master
 
-This pulls **a5-a7** and re-apply **c0-c7** on top of them:
+这会先拉取 **a5-a7** 然后重新应用 **c0-c7** 在它们的顶部：
 
 ::
 
@@ -340,17 +312,16 @@ This pulls **a5-a7** and re-apply **c0-c7** on top of them:
        ...
        c7
 
-Getting Better Logs from Git
+从Git获取更好的日志
 ----------------------------
 
-Use these commands to change the configuration of Git in order to
-produce better logs:
+使用这些命令更改Git的配置，从而产生更好的日志：
 
 ::
 
     git config log.abbrevCommit true
 
-The command above sets the log to abbreviate the commits' hash.
+这个命令将命令日志设置为缩写提交的哈希值。
 
 ::
 
@@ -359,16 +330,20 @@ The command above sets the log to abbreviate the commits' hash.
 The command above sets the abbreviation length to the last 5 characters
 of the hash.
 
+这个命令设置缩写的长度为哈希值的最后5个字母。
+
 ::
 
     git config format.pretty oneline
 
-The command above avoids the insertion of an unnecessary line before the
-Author line.
+上面的命令避免在作者行之前插入不必要的行。
 
-To make these configuration changes specifically for the current Git
-user, you must add the path option ``--global`` to ``config`` as
-follows:
+
+要为当前用户进行这些配置更改，必须为 ``config`` 添加path选项 ``--global`` ，如下所示：
+
+::
+
+    git config --global
 
 .. Licensed under Creative Commons Attribution 4.0 International License
    https://creativecommons.org/licenses/by/4.0/
