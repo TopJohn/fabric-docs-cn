@@ -59,7 +59,7 @@ Gerrit服务器提供了一个提交前的钩子来自动生成使用的Change-I
 
 -  在Gerrit审核页面打开一个变更是一种快速跟踪变更的方法。
 
--  在 ``Gerrit``上关注Gerrit上的项目，至少选择一个*New Changes, New Patch Sets, All Comments* and *Submitted
+-  在 ``Gerrit`` 上关注Gerrit上的项目，至少选择一个 *New Changes, New Patch Sets, All Comments* and *Submitted
    Changes* 其中一个。
 
 始终追踪你正在进行的项目；同时关注邮件列表里的反馈和评论，以此来学习护着帮助他人提升。
@@ -72,7 +72,9 @@ Gerrit服务器提供了一个提交前的钩子来自动生成使用的Change-I
 将更改从 ``REMOTE/master`` 树推送到Gerri 图,以便在 **TopicName** 中作为主题进行审核，
 请使用以下命令作为示例：
 
-$ git push REMOTE HEAD:refs/for/master/TopicName
+::
+
+    $ git push REMOTE HEAD:refs/for/master/TopicName
 
 该主题将会出现在评论 ``UI`` 和 ``Open Changes List`` 中。
 主题分支在被合并到master分支之后将会消失。
