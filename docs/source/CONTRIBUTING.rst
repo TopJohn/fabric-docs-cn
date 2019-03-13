@@ -36,7 +36,7 @@
 
 为了参与到Hyperledger Fabric项目的开发中来，你首先需要一个 :doc:`Linux Foundation
 账号 <Gerrit/lf-account>`。
-你需要实用你的LF ID来访问所有的Hyperledger社区的工具，包括 
+你需要使用你的LF ID来访问所有的Hyperledger社区的工具，包括 
 `Gerrit <https://gerrit.hyperledger.org>`__，
 `Jira <https://jira.hyperledger.org>`__，
 `RocketChat <https://chat.hyperledger.org/>`__，和
