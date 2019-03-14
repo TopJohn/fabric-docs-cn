@@ -59,8 +59,6 @@
 .. image:: images/GitCloneCmd.png
     :width: 600px
 
-Now, in a terminal window on your laptop, paste and run the command. e.g.
-
 现在，在你的笔记本命令行终端中，粘贴并且运行这个命令。例如：
 
 .. code::
