@@ -13,7 +13,7 @@
 
    Jira 面板
 
-现在在左侧点击 **全部面板**
+现在在左侧点击 **全部面板** ：
 
 .. figure:: images/Jira1.png
    :alt: Jira boards
